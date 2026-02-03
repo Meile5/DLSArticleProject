@@ -1,0 +1,79 @@
+services:
+  article-db-global:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    environment:
+      MSSQL_SA_PASSWORD: "SuperSecret7!"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - mssql-global:/var/opt/mssql
+  
+  article-db-continent-1:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    environment:
+      MSSQL_SA_PASSWORD: "SuperSecret7!"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - mssql-continent-1:/var/opt/mssql
+  
+  article-db-continent-2:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    environment:
+      MSSQL_SA_PASSWORD: "SuperSecret7!"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - mssql-continent-2:/var/opt/mssql
+
+  article-db-continent-3:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    environment:
+      MSSQL_SA_PASSWORD: "SuperSecret7!"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - mssql-continent-3:/var/opt/mssql
+  
+  article-db-continent-4:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    environment:
+      MSSQL_SA_PASSWORD: "SuperSecret7!"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - mssql-continent-4:/var/opt/mssql
+  
+  article-db-continent-5:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    environment:
+      MSSQL_SA_PASSWORD: "SuperSecret7!"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - mssql-continent-5:/var/opt/mssql
+  
+  article-db-continent-6:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    environment:
+      MSSQL_SA_PASSWORD: "SuperSecret7!"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - mssql-continent-6:/var/opt/mssql
+        
+  article-db-continent-7:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    environment:
+      MSSQL_SA_PASSWORD: "SuperSecret7!"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - mssql-continent-7:/var/opt/mssql
+      
+ 
+
+volumes:
+  mssql-global:
+  mssql-continent-1:
+  mssql-continent-2:
+  mssql-continent-3:
+  mssql-continent-4:
+  mssql-continent-5:
+  mssql-continent-6:
+  mssql-continent-7:
+
+
+

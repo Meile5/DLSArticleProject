@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>dotnet-ArticleService-22ca3e2c-ad53-430e-8a35-93ed45cd7a2d</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.11"/>
+        <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.0-preview3.25342.7" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.12" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1"/>
+    </ItemGroup>
+</Project>
