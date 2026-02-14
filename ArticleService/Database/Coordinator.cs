@@ -16,6 +16,12 @@ public class Coordinator
     private const string GLOBAL_CONTINENT_6_DB = "mssql-continent-6";
     private const string GLOBAL_CONTINENT_7_DB = "mssql-continent-7";
 
+    private List<string> GlobalContinentArray =
+    [
+        GLOBAL_DB, GLOBAL_CONTINENT_1_DB, GLOBAL_CONTINENT_2_DB, GLOBAL_CONTINENT_3_DB, GLOBAL_CONTINENT_4_DB,
+        GLOBAL_CONTINENT_5_DB, GLOBAL_CONTINENT_6_DB, GLOBAL_CONTINENT_7_DB
+    ];
+
 
     public DbConnection GetContinentGlobal()
     {
@@ -85,7 +91,7 @@ public class Coordinator
             return connection;
         }
         
-        connection = new SqlConnection($"Server={serverName};User Id=sa;Password=SuperSecret7!;Encrypt=false;");
+        connection = new SqlConnection($"Server={serverName};User=sa;Password=SuperSecret7!;Encrypt=false;");
         connection.Open();
         ConnectionCache.Add(serverName, connection);
         return connection;

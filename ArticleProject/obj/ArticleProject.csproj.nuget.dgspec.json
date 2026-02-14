@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/nelsonverissimo/Projects/Top-up/DLS/DLSArticleProject/ArticleProject/ArticleProject.csproj": {}
+    "C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ArticleProject\\ArticleProject.csproj": {}
   },
   "projects": {
-    "/Users/nelsonverissimo/Projects/Top-up/DLS/DLSArticleProject/ArticleProject/ArticleProject.csproj": {
+    "C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ArticleProject\\ArticleProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/nelsonverissimo/Projects/Top-up/DLS/DLSArticleProject/ArticleProject/ArticleProject.csproj",
+        "projectUniqueName": "C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ArticleProject\\ArticleProject.csproj",
         "projectName": "ArticleProject",
-        "projectPath": "/Users/nelsonverissimo/Projects/Top-up/DLS/DLSArticleProject/ArticleProject/ArticleProject.csproj",
-        "packagesPath": "/Users/nelsonverissimo/.nuget/packages/",
-        "outputPath": "/Users/nelsonverissimo/Projects/Top-up/DLS/DLSArticleProject/ArticleProject/obj/",
+        "projectPath": "C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ArticleProject\\ArticleProject.csproj",
+        "packagesPath": "C:\\Users\\Jean\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ArticleProject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/nelsonverissimo/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Jean\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -38,7 +38,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -63,15 +63,19 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[8.0.19, 8.0.19]"
+              "version": "[8.0.23, 8.0.23]"
             },
             {
-              "name": "Microsoft.NETCore.App.Host.osx-arm64",
-              "version": "[8.0.19, 8.0.19]"
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[8.0.23, 8.0.23]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
-              "version": "[8.0.19, 8.0.19]"
+              "version": "[8.0.23, 8.0.23]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[8.0.23, 8.0.23]"
             }
           ],
           "frameworkReferences": {
@@ -79,7 +83,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.304/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\Jean\\.dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

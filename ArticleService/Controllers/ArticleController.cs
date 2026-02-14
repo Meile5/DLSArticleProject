@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ArticleService.Database;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ArticleService.Controllers;
 
@@ -6,7 +7,14 @@ namespace ArticleService.Controllers;
 [Route("[controller]")]
 public class ArticleController : ControllerBase
 {
-    private Database database = Database.GetInstance();
+    private ArticleDatabase database = ArticleDatabase.GetInstance();
+    
+    [HttpGet]
+    public Dictionary<int, int> Get()
+    {
+        Console.WriteLine("called GET request");
+        return  database.GetAllArticles();
+    }
     
     [HttpDelete]
     public void Delete()
