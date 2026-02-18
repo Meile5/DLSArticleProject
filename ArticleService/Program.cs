@@ -1,16 +1,25 @@
 using ArticleService;
 using Microsoft.AspNetCore.Builder;
 
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddHostedService<Worker>();
+var builder = WebApplication.CreateBuilder(args); 
+//builder.Services.AddHostedService<Worker>();
 
-builder.Services.AddControllers();
+
 //swagger stuff
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("DevelopmentCorsPolicy", corsBuilder =>
+    {
+        corsBuilder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
 
-
+builder.Services.AddControllers();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -18,5 +27,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("DevelopmentCorsPolicy");
 
 await app.RunAsync();

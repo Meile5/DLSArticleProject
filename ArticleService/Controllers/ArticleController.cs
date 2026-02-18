@@ -4,16 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 namespace ArticleService.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("Article")]
 public class ArticleController : ControllerBase
 {
     private ArticleDatabase database = ArticleDatabase.GetInstance();
     
     [HttpGet]
-    public Dictionary<int, int> Get()
+    public async Task<IActionResult> Get()
     {
         Console.WriteLine("called GET request");
-        return  database.GetAllArticles();
+        return Ok(database.GetAllArticles());
     }
     
     [HttpDelete]
