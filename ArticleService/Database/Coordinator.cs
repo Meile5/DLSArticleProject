@@ -7,14 +7,15 @@ namespace ArticleService.Database;
 public class Coordinator
 {
     private IDictionary<string, DbConnection> ConnectionCache = new Dictionary<string, DbConnection>();
-    private const string GLOBAL_DB = "mssql-global";
-    private const string GLOBAL_CONTINENT_1_DB = "mssql-continent-1";
-    private const string GLOBAL_CONTINENT_2_DB = "mssql-continent-2";
-    private const string GLOBAL_CONTINENT_3_DB = "mssql-continent-3";
-    private const string GLOBAL_CONTINENT_4_DB = "mssql-continent-4";
-    private const string GLOBAL_CONTINENT_5_DB = "mssql-continent-5";
-    private const string GLOBAL_CONTINENT_6_DB = "mssql-continent-6";
-    private const string GLOBAL_CONTINENT_7_DB = "mssql-continent-7";
+    //changed these to be port numbers instead
+    private const string GLOBAL_DB = "1433";
+    private const string GLOBAL_CONTINENT_1_DB = "1434";
+    private const string GLOBAL_CONTINENT_2_DB = "1435";
+    private const string GLOBAL_CONTINENT_3_DB = "1436";
+    private const string GLOBAL_CONTINENT_4_DB = "1437";
+    private const string GLOBAL_CONTINENT_5_DB = "1438";
+    private const string GLOBAL_CONTINENT_6_DB = "1439";
+    private const string GLOBAL_CONTINENT_7_DB = "1440";
 
     private List<string> GlobalContinentArray =
     [
@@ -25,35 +26,35 @@ public class Coordinator
 
     public DbConnection GetContinentGlobal()
     {
-        return GetConnectionByServerName(GLOBAL_DB);
+        return GetConnectionByPort(GLOBAL_DB);
     }
     public DbConnection GetContinent1()
     {
-        return GetConnectionByServerName(GLOBAL_CONTINENT_1_DB);
+        return GetConnectionByPort(GLOBAL_CONTINENT_1_DB);
     }
     public DbConnection GetContinent2()
     {
-        return GetConnectionByServerName(GLOBAL_CONTINENT_2_DB);
+        return GetConnectionByPort(GLOBAL_CONTINENT_2_DB);
     }
     public DbConnection GetContinent3()
     {
-        return GetConnectionByServerName(GLOBAL_CONTINENT_3_DB);
+        return GetConnectionByPort(GLOBAL_CONTINENT_3_DB);
     }
     public DbConnection GetContinent4()
     {
-        return GetConnectionByServerName(GLOBAL_CONTINENT_4_DB);
+        return GetConnectionByPort(GLOBAL_CONTINENT_4_DB);
     }
     public DbConnection GetContinent5()
     {
-        return GetConnectionByServerName(GLOBAL_CONTINENT_5_DB);
+        return GetConnectionByPort(GLOBAL_CONTINENT_5_DB);
     }
     public DbConnection GetContinent6()
     {
-        return GetConnectionByServerName(GLOBAL_CONTINENT_6_DB);
+        return GetConnectionByPort(GLOBAL_CONTINENT_6_DB);
     }
     public DbConnection GetContinent7()
     {
-        return GetConnectionByServerName(GLOBAL_CONTINENT_7_DB);
+        return GetConnectionByPort(GLOBAL_CONTINENT_7_DB);
     }
     
     /*public DbConnection GetGlobalConnection(string word)
@@ -84,16 +85,17 @@ public class Coordinator
 
     }
 
-    private DbConnection GetConnectionByServerName(string serverName)
+    private DbConnection GetConnectionByPort(string port)
     {
-        if (ConnectionCache.TryGetValue(serverName, out var connection))
+        if (ConnectionCache.TryGetValue(port, out var connection))
         {
             return connection;
         }
         
-        connection = new SqlConnection($"Server={serverName};User=sa;Password=SuperSecret7!;Encrypt=false;");
+        connection = new SqlConnection($"server=tcp:(local), {port};User Id=sa;Password=SuperSecret7!;Encrypt=false;");
+        //connection = new SqlConnection(connectionString);
         connection.Open();
-        ConnectionCache.Add(serverName, connection);
+        ConnectionCache.Add(port, connection);
         return connection;
     }
 }
