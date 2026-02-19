@@ -1,6 +1,7 @@
+name: articleservice2
 services:
   article-db-global:
-    image: mcr.microsoft.com/azure-sql-edge:latest
+    image: mcr.microsoft.com/mssql/server:latest
     environment:
       MSSQL_SA_PASSWORD: "SuperSecret7!"
       ACCEPT_EULA: "Y"
@@ -10,7 +11,7 @@ services:
       - mssql-global:/var/opt/mssql
   
   article-db-continent-1:
-    image: mcr.microsoft.com/azure-sql-edge:latest
+    image: mcr.microsoft.com/mssql/server:latest
     environment:
       MSSQL_SA_PASSWORD: "SuperSecret7!"
       ACCEPT_EULA: "Y"
@@ -20,7 +21,7 @@ services:
       - mssql-continent-1:/var/opt/mssql
   
   article-db-continent-2:
-    image: mcr.microsoft.com/azure-sql-edge:latest
+    image: mcr.microsoft.com/mssql/server:latest
     environment:
       MSSQL_SA_PASSWORD: "SuperSecret7!"
       ACCEPT_EULA: "Y"
@@ -30,7 +31,7 @@ services:
       - mssql-continent-2:/var/opt/mssql
 
   article-db-continent-3:
-    image: mcr.microsoft.com/azure-sql-edge:latest
+    image: mcr.microsoft.com/mssql/server:latest
     environment:
       MSSQL_SA_PASSWORD: "SuperSecret7!"
       ACCEPT_EULA: "Y"
@@ -40,7 +41,7 @@ services:
       - mssql-continent-3:/var/opt/mssql
   
   article-db-continent-4:
-    image: mcr.microsoft.com/azure-sql-edge:latest
+    image: mcr.microsoft.com/mssql/server:latest
     environment:
       MSSQL_SA_PASSWORD: "SuperSecret7!"
       ACCEPT_EULA: "Y"
@@ -50,7 +51,7 @@ services:
       - mssql-continent-4:/var/opt/mssql
   
   article-db-continent-5:
-    image: mcr.microsoft.com/azure-sql-edge:latest
+    image: mcr.microsoft.com/mssql/server:latest
     environment:
       MSSQL_SA_PASSWORD: "SuperSecret7!"
       ACCEPT_EULA: "Y"
@@ -60,7 +61,7 @@ services:
       - mssql-continent-5:/var/opt/mssql
   
   article-db-continent-6:
-    image: mcr.microsoft.com/azure-sql-edge:latest
+    image: mcr.microsoft.com/mssql/server:latest
     environment:
       MSSQL_SA_PASSWORD: "SuperSecret7!"
       ACCEPT_EULA: "Y"
@@ -70,7 +71,7 @@ services:
       - mssql-continent-6:/var/opt/mssql
         
   article-db-continent-7:
-    image: mcr.microsoft.com/azure-sql-edge:latest
+    image: mcr.microsoft.com/mssql/server:latest
     environment:
       MSSQL_SA_PASSWORD: "SuperSecret7!"
       ACCEPT_EULA: "Y"

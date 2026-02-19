@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/nelsonverissimo/Projects/Top-up/DLS/DLSArticleProject/ProfanityService/ProfanityService.csproj": {}
+    "C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ProfanityService\\ProfanityService.csproj": {}
   },
   "projects": {
-    "/Users/nelsonverissimo/Projects/Top-up/DLS/DLSArticleProject/ProfanityService/ProfanityService.csproj": {
+    "C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ProfanityService\\ProfanityService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/nelsonverissimo/Projects/Top-up/DLS/DLSArticleProject/ProfanityService/ProfanityService.csproj",
+        "projectUniqueName": "C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ProfanityService\\ProfanityService.csproj",
         "projectName": "ProfanityService",
-        "projectPath": "/Users/nelsonverissimo/Projects/Top-up/DLS/DLSArticleProject/ProfanityService/ProfanityService.csproj",
-        "packagesPath": "/Users/nelsonverissimo/.nuget/packages/",
-        "outputPath": "/Users/nelsonverissimo/Projects/Top-up/DLS/DLSArticleProject/ProfanityService/obj/",
+        "projectPath": "C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ProfanityService\\ProfanityService.csproj",
+        "packagesPath": "C:\\Users\\Jean\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ProfanityService\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/nelsonverissimo/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Jean\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -99,7 +99,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.102/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Users\\Jean\\.dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
