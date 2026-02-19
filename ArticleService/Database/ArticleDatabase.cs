@@ -28,8 +28,8 @@ public class ArticleDatabase
     {
         foreach (var connection in coordinator.GetAllConnections())
         {
-            Execute(connection, "CREATE TABLE IF NOT EXISTS Article(ArticleId nvarchar(50) NOT NULL PRIMARY KEY,Title nvarchar(200) NOT NULL,Contents nvarchar(800) NOT NULL,PublishingDate datetime NOT NULL);");
-            Execute(connection, "CREATE TABLE IF NOT EXISTS Author(AuthorId nvarchar(50) NOT NULL PRIMARY KEY,AuthorName nvarchar(50) NOT NULL,AuthorLastName nvarchar(50) NOT NULL,);");
+            Execute(connection, "CREATE TABLE Article(ArticleId nvarchar(50) NOT NULL PRIMARY KEY,Title nvarchar(200) NOT NULL,Contents nvarchar(800) NOT NULL,PublishingDate datetime NOT NULL);");
+            Execute(connection, "CREATE TABLE Author(AuthorId nvarchar(50) NOT NULL PRIMARY KEY,AuthorName nvarchar(50) NOT NULL,AuthorLastName nvarchar(50) NOT NULL,);");
         }
     }
 
