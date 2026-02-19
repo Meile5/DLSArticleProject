@@ -1,0 +1,13 @@
+services:
+  profanity-db:
+    image: mcr.microsoft.com/mssql/server:latest
+    environment:
+      MSSQL_SA_PASSWORD: "SuperSecret7!"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1441:1433"
+    volumes:
+      - mssql-profanity:/var/opt/mssql
+
+volumes:
+  mssql-profanity:
