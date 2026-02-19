@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("dotnet-ArticleProject-194b0205-4f07-431a-8b67-e3dcbf739700")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("ArticleProject")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c44e2b80159ef9a3d84d944b9c5d828da55e9400")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+112224332690d2a7fc50ff8dfc8ae485983780ec")]
 [assembly: System.Reflection.AssemblyProductAttribute("ArticleProject")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ArticleProject")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
