@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="profanity-instance" uuid="897b51df-e220-4999-9690-47fed32c8879">
+    <data-source source="LOCAL" name="profanity-instance" uuid="fbae224b-e1d2-44c1-a9c1-734f606284e9">
       <driver-ref>sqlserver.jb</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.jetbrains.jdbc.sqlserver.SqlServerDriver</jdbc-driver>

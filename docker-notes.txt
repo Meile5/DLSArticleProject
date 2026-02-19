@@ -1,4 +1,4 @@
-To run docker compose in macOS:
+To run docker compose on macOS:
 docker compose -f docker-compose.yml -f docker-compose-mac.yml up
 
 To run docker compose on windows:

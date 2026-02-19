@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ArticleService\\ArticleService.csproj": {}
+    "/Users/nelsonverissimo/Projects/Top-up/DLS/DLSArticleProject/ArticleService/ArticleService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ArticleService\\ArticleService.csproj": {
+    "/Users/nelsonverissimo/Projects/Top-up/DLS/DLSArticleProject/ArticleService/ArticleService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ArticleService\\ArticleService.csproj",
+        "projectUniqueName": "/Users/nelsonverissimo/Projects/Top-up/DLS/DLSArticleProject/ArticleService/ArticleService.csproj",
         "projectName": "ArticleService",
-        "projectPath": "C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ArticleService\\ArticleService.csproj",
-        "packagesPath": "C:\\Users\\Jean\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ArticleService\\obj\\",
+        "projectPath": "/Users/nelsonverissimo/Projects/Top-up/DLS/DLSArticleProject/ArticleService/ArticleService.csproj",
+        "packagesPath": "/Users/nelsonverissimo/.nuget/packages/",
+        "outputPath": "/Users/nelsonverissimo/Projects/Top-up/DLS/DLSArticleProject/ArticleService/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Jean\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/nelsonverissimo/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -37,7 +37,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -83,12 +84,26 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.23, 8.0.23]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.osx-arm64",
+              "version": "[8.0.23, 8.0.23]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.23, 8.0.23]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.102/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

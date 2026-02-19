@@ -11,7 +11,8 @@ public class ProfanityService(ProfanityRepo profanityRepo)
         
         foreach(var word in words)
         {
-            return comment.Comment.Contains(word.Word1);
+            if (comment.Comment.Contains(word.Word1, StringComparison.OrdinalIgnoreCase))
+                return true;
         }
         return false;
     }

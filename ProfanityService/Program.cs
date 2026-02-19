@@ -1,22 +1,50 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using ProfanityService;
+using Microsoft.AspNetCore.Builder;
+using ProfanityService.AppOptionsPattern;
+using ProfanityService.Database;
 
-var builder = Host.CreateApplicationBuilder(args);
+namespace ProfanityService;
 
-var services = builder.Services;
-
-services.AddHostedService<Worker>();
-
-/*
-services.AddDbContext<AppDbContext>((service, options) =>
+public class Program
 {
-    var provider = services.BuildServiceProvider();
-    options.UseNpgsql(
-        provider.GetRequiredService<IOptionsMonitor<AppOptions>>().CurrentValue.DbConnectionString);
-    options.EnableSensitiveDataLogging();
-});
-*/
+    public static async Task Main()
+    {
+        try
+        {
+            var builder = WebApplication.CreateBuilder();
+            ConfigureServices(builder.Services, builder.Configuration);
+            var app = builder.Build();
+            
+            // <snippet_UseSwagger>
+            if (app.Environment.IsDevelopment())
+            {
+                app.MapOpenApi();
+                app.UseSwaggerUi(options =>
+                {
+                    options.DocumentPath = "/openapi/v1.json";
+                });
+            }
+            // </snippet_UseSwagger>
+            
+            app.MapControllers();
+            
+            await app.RunAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
 
-var host = builder.Build();
-host.Run();
+    private static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddControllers();
+        services.AddAppOptions(configuration);
+        services.AddDataSourceAndRepositories();
+        services.AddOpenApi();
+        
+        services.AddHostedService<Worker>();
+        
+        services.AddScoped<Service.ProfanityService>();
+
+    }
+}

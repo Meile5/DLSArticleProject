@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Storage;
 using ProfanityService.Models.Dtos;
 
 namespace ProfanityService.Controllers;

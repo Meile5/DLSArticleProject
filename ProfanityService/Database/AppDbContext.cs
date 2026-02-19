@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ProfanityService.Entities;
 
-namespace ProfanityService;
+namespace ProfanityService.Database;
 
 public partial class AppDbContext : DbContext
 {

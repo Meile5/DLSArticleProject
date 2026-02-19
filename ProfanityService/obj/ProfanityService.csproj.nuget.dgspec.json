@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ProfanityService\\ProfanityService.csproj": {}
+    "/Users/nelsonverissimo/Projects/Top-up/DLS/DLSArticleProject/ProfanityService/ProfanityService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ProfanityService\\ProfanityService.csproj": {
+    "/Users/nelsonverissimo/Projects/Top-up/DLS/DLSArticleProject/ProfanityService/ProfanityService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ProfanityService\\ProfanityService.csproj",
+        "projectUniqueName": "/Users/nelsonverissimo/Projects/Top-up/DLS/DLSArticleProject/ProfanityService/ProfanityService.csproj",
         "projectName": "ProfanityService",
-        "projectPath": "C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ProfanityService\\ProfanityService.csproj",
-        "packagesPath": "C:\\Users\\Jean\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ProfanityService\\obj\\",
+        "projectPath": "/Users/nelsonverissimo/Projects/Top-up/DLS/DLSArticleProject/ProfanityService/ProfanityService.csproj",
+        "packagesPath": "/Users/nelsonverissimo/.nuget/packages/",
+        "outputPath": "/Users/nelsonverissimo/Projects/Top-up/DLS/DLSArticleProject/ProfanityService/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Jean\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/nelsonverissimo/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -46,7 +46,7 @@
           "dependencies": {
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
-              "version": "[7.0.11, )"
+              "version": "[10.0.3, )"
             },
             "Microsoft.Data.SqlClient": {
               "target": "Package",
@@ -74,9 +74,13 @@
               "target": "Package",
               "version": "[10.0.2, )"
             },
-            "PgCtxSetup": {
+            "NSwag.AspNetCore": {
               "target": "Package",
-              "version": "[1.5.0, )"
+              "version": "[14.6.3, )"
+            },
+            "System.Security.Cryptography.Xml": {
+              "target": "Package",
+              "version": "[10.0.3, )"
             }
           },
           "imports": [
@@ -95,7 +99,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\Jean\\.dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.102/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

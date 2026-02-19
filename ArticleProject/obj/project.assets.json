@@ -1543,19 +1543,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Jean\\.nuget\\packages\\": {}
+    "/Users/nelsonverissimo/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ArticleProject\\ArticleProject.csproj",
+      "projectUniqueName": "/Users/nelsonverissimo/Projects/Top-up/DLS/DLSArticleProject/ArticleProject/ArticleProject.csproj",
       "projectName": "ArticleProject",
-      "projectPath": "C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ArticleProject\\ArticleProject.csproj",
-      "packagesPath": "C:\\Users\\Jean\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ArticleProject\\obj\\",
+      "projectPath": "/Users/nelsonverissimo/Projects/Top-up/DLS/DLSArticleProject/ArticleProject/ArticleProject.csproj",
+      "packagesPath": "/Users/nelsonverissimo/.nuget/packages/",
+      "outputPath": "/Users/nelsonverissimo/Projects/Top-up/DLS/DLSArticleProject/ArticleProject/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Jean\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/Users/nelsonverissimo/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -1607,15 +1607,11 @@
             "version": "[8.0.23, 8.0.23]"
           },
           {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "name": "Microsoft.NETCore.App.Host.osx-arm64",
             "version": "[8.0.23, 8.0.23]"
           },
           {
             "name": "Microsoft.NETCore.App.Ref",
-            "version": "[8.0.23, 8.0.23]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
             "version": "[8.0.23, 8.0.23]"
           }
         ],
@@ -1624,16 +1620,8 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Users\\Jean\\.dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.102/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\Jean\\Documents\\GitHub\\DLSArticleProject\\ArticleProject\\obj\\project.nuget.cache : '<' is an invalid start of a property name. Expected a '\"'. Path: $ | LineNumber: 2 | BytePositionInLine: 0."
-    }
-  ]
+  }
 }
