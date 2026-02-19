@@ -1,23 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage;
+using ProfanityService.Models.Dtos;
 
 namespace ProfanityService.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ProfanityController : ControllerBase
+public class ProfanityController(Service.ProfanityService profanityService) : ControllerBase
 {
-    //private Database database = Database.GetInstance();
-    
-    [HttpDelete]
-    public void Delete()
-    {
-        //database.DeleteDatabase();
-    }
-
     [HttpPost]
-    public void Post()
+    public async Task <ActionResult <bool>> CheckForForbiddenWords(CommentDto commentDto)
     {
-        //database.RecreateDatabase();
+        return await profanityService.CheckForbiddenWords(commentDto);
     }
 }

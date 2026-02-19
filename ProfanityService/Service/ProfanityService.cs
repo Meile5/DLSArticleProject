@@ -1,11 +1,18 @@
+using ProfanityService.Models.Dtos;
+using ProfanityService.Repositories;
+
 namespace ProfanityService.Service;
 
-public class ProfanityService
+public class ProfanityService(ProfanityRepo profanityRepo)
 {
-    public bool CheckForbidenWords(string comment)
+    public async Task <bool> CheckForbiddenWords(CommentDto comment)
     {
-        //var wordFromDb = db.GetForbidenWords();
-        //return comment.Contains(wordFromDb);
+        var words = await profanityRepo.GetWords();
+        
+        foreach(var word in words)
+        {
+            return comment.Comment.Contains(word.Word1);
+        }
         return false;
     }
 }

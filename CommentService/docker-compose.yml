@@ -1,0 +1,13 @@
+services:
+  comment-db:
+    image: mcr.microsoft.com/mssql/server:latest
+    environment:
+      MSSQL_SA_PASSWORD: "SuperSecret7!"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1442:1433"
+    volumes:
+      - mssql-comment:/var/opt/mssql
+
+volumes:
+  mssql-comment:
