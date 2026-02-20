@@ -42,8 +42,6 @@ public class Program
         services.AddDataSourceAndRepositories();
         services.AddOpenApi();
         
-        services.AddHostedService<Worker>();
-        
         services.AddScoped<Service.ProfanityService>();
 
     }
