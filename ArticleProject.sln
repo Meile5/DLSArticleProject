@@ -1,7 +1,5 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticleProject", "ArticleProject\ArticleProject.csproj", "{D92335AB-08D2-4726-9A53-06410D72F98C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticleService", "ArticleService\ArticleService.csproj", "{4AE0F916-90AB-4DC8-A20E-AB1BB262A767}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommentService", "CommentService\CommentService.csproj", "{A6A86241-A13C-44B9-B790-C25C7CD78AA8}"
@@ -19,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D92335AB-08D2-4726-9A53-06410D72F98C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D92335AB-08D2-4726-9A53-06410D72F98C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D92335AB-08D2-4726-9A53-06410D72F98C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D92335AB-08D2-4726-9A53-06410D72F98C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4AE0F916-90AB-4DC8-A20E-AB1BB262A767}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4AE0F916-90AB-4DC8-A20E-AB1BB262A767}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AE0F916-90AB-4DC8-A20E-AB1BB262A767}.Release|Any CPU.ActiveCfg = Release|Any CPU
