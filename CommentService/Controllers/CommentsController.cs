@@ -1,16 +1,33 @@
+using CommentService.Models.Dtos;
 using Microsoft.AspNetCore.Mvc;
-using ProfanityService.Models.Dtos;
+using CommentService.Service;
 
 namespace CommentService.Controllers;
 
 
 [ApiController]
-[Route("[controller]")]
-public class CommentsController(Service.CommentsService commentService) : ControllerBase
+[Route("api/[controller]")]
+public class CommentsController(CommentsService commentService) : ControllerBase
 {
     [HttpPost]
-    public async Task <ActionResult > SaveComment(CommentDto commentDto)
+    [Route("Create-Comment")]
+    public async Task<IActionResult> SaveComment(CreateCommentDto createCommentDto)
     {
-        
+        await commentService.SaveComment(createCommentDto);
+        return Ok();
     }
+    
+    
+    [HttpGet]
+    [Route("Get-Comments")]
+    public async Task<ActionResult<CommentsListDto>> GetComments([FromQuery] ArticleDto articleDto)
+    {
+        var result = await commentService.GetComments(articleDto);
+        if (result.Comments.Count == 0)
+        {
+            return NotFound();
+        }
+        return Ok(result);
+    }
+    
 }
