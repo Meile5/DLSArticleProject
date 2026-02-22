@@ -1,14 +1,18 @@
-CREATE TABLE Article(
-                        ArticleId nvarchar(50) NOT NULL PRIMARY KEY,
-                        Title nvarchar(200) NOT NULL,
-                        Contents nvarchar(800) NOT NULL,
-                        PublishingDate datetime NOT NULL
-
+CREATE TABLE Articles
+(
+    ArticleId UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    Title NVARCHAR(MAX) NOT NULL,
+    Contents NVARCHAR(MAX) NOT NULL,
+    PublishingDate DATETIME2 NOT NULL,
+    AuthorId UNIQUEIDENTIFIER NOT NULL,
+    CONSTRAINT FK_Articles_Authors FOREIGN KEY (AuthorId)
+        REFERENCES Authors (AuthorId)
+        ON DELETE CASCADE
 );
 
-CREATE TABLE Author(
-                       AuthorId nvarchar(50) NOT NULL PRIMARY KEY,
-                       AuthorName nvarchar(50) NOT NULL,
-                       AuthorLastName nvarchar(50) NOT NULL,
-
+CREATE TABLE Authors
+(
+    AuthorId UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    AuthorName NVARCHAR(100) NOT NULL,
+    AuthorLastName NVARCHAR(100) NOT NULL
 );

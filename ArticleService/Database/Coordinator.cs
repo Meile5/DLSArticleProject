@@ -92,8 +92,8 @@ public class Coordinator
             return connection;
         }
         
-        connection = new SqlConnection($"server=tcp:(local), {port};User Id=sa;Password=SuperSecret7!;Encrypt=false;");
-        //connection = new SqlConnection(connectionString);
+        var connectionString = $"Server=localhost,{port};Database=ArticleDb;User Id=sa;Password=SuperSecret7!;TrustServerCertificate=True;";
+        connection = new SqlConnection(connectionString);
         connection.Open();
         ConnectionCache.Add(port, connection);
         return connection;

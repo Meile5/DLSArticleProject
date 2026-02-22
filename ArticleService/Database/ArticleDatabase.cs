@@ -1,194 +1,107 @@
-﻿namespace ArticleService.Database;
-
-using System.Data;
-using System.Data.Common;
+﻿using ArticleService.Entities;
+using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
 
+namespace ArticleService.Database;
 
-public class ArticleDatabase
+public class ArticleDatabase : IArticleRepository
 {
-    private Coordinator coordinator = new Coordinator();
-    private static ArticleDatabase instance = new ArticleDatabase();
+    private readonly Coordinator _coordinator;
 
-    public static ArticleDatabase GetInstance()
+    public ArticleDatabase(Coordinator coordinator)
     {
-        return instance;
+        _coordinator = coordinator;
     }
 
-    public void DeleteDatabase()
+    private SqlConnection GetGlobalConnection() => (SqlConnection)_coordinator.GetContinentGlobal();
+
+    public async Task<Article> CreateAsync(Article article)
     {
-        foreach (var connection in coordinator.GetAllConnections())
-        {
-            Execute(connection, "DROP TABLE IF EXISTS Article");
-            Execute(connection, "DROP TABLE IF EXISTS Author");
-        }
-    }
-
-    public void RecreateDatabase()
-    {
-        foreach (var connection in coordinator.GetAllConnections())
-        {
-            Execute(connection, "CREATE TABLE Article(ArticleId nvarchar(50) NOT NULL PRIMARY KEY,Title nvarchar(200) NOT NULL,Contents nvarchar(800) NOT NULL,PublishingDate datetime NOT NULL);");
-            Execute(connection, "CREATE TABLE Author(AuthorId nvarchar(50) NOT NULL PRIMARY KEY,AuthorName nvarchar(50) NOT NULL,AuthorLastName nvarchar(50) NOT NULL,);");
-        }
-    }
-
-    
-    public Dictionary<int, int> GetAllArticles()
-    {
-        var res = new Dictionary<int, int>();
-
-        var sql = @"SELECT * FROM Article";
-
-        var connection = coordinator.GetContinentGlobal(); //change later to be configurable
-        var selectCmd = connection.CreateCommand();
-        selectCmd.CommandText = sql;
-
-        using (var reader = selectCmd.ExecuteReader())
-        {
-            while (reader.Read())
-            {
-                var docId = reader.GetInt32(0);
-                var count = reader.GetInt32(1);
-
-                res.Add(docId, count);
-            }
-        }
-            
-        return res;
-    }
-
-    private string AsString(List<int> x)
-    {
-        return string.Concat("(", string.Join(',', x.Select(i => i.ToString())), ")");
-    }
-
-    public List<string> GetArticleByIds(List<int> docIds)
-    {
+        using var conn = GetGlobalConnection();
+        using var cmd = conn.CreateCommand();
+        cmd.CommandText = @"
+            INSERT INTO Articles (ArticleId, Title, Contents, PublishingDate, AuthorId)
+            VALUES (@ArticleId, @Title, @Contents, @PublishingDate, @AuthorId)";
         
-        List<string> res = new List<string>();
+        cmd.Parameters.AddWithValue("@ArticleId", article.ArticleId);
+        cmd.Parameters.AddWithValue("@Title", article.Title);
+        cmd.Parameters.AddWithValue("@Contents", article.Contents);
+        cmd.Parameters.AddWithValue("@PublishingDate", article.PublishingDate);
+        cmd.Parameters.AddWithValue("@AuthorId", article.AuthorId);
 
-        var connection = coordinator.GetContinentGlobal();
-        var selectCmd = connection.CreateCommand();
-        selectCmd.CommandText = "SELECT * FROM Article WHERE id IN " + AsString(docIds);
+        await cmd.ExecuteNonQueryAsync();
+        return article;
+    }
 
-        using (var reader = selectCmd.ExecuteReader())
+    public async Task<Article?> GetByIdAsync(Guid articleId)
+    {
+        using var conn = GetGlobalConnection();
+        using var cmd = conn.CreateCommand();
+        cmd.CommandText = "SELECT * FROM Articles WHERE ArticleId = @ArticleId";
+        cmd.Parameters.AddWithValue("@ArticleId", articleId);
+
+        using var reader = await cmd.ExecuteReaderAsync();
+        if (await reader.ReadAsync())
         {
-            while (reader.Read())
+            return new Article
             {
-                var id = reader.GetInt32(0);
-                var url = reader.GetString(1);
-
-                res.Add(url);
-            }
+                ArticleId = reader.GetGuid(reader.GetOrdinal("ArticleId")),
+                Title = reader.GetString(reader.GetOrdinal("Title")),
+                Contents = reader.GetString(reader.GetOrdinal("Contents")),
+                PublishingDate = reader.GetDateTime(reader.GetOrdinal("PublishingDate")),
+                AuthorId = reader.GetGuid(reader.GetOrdinal("AuthorId"))
+            };
         }
 
-        return res;
+        return null;
     }
 
-    private void Execute(DbConnection connection, string sql)
+    public async Task<IEnumerable<Article>> GetAllAsync()
     {
-        using var trans = connection.BeginTransaction();
-        var cmd = connection.CreateCommand();
-        cmd.Transaction = trans;
-        cmd.CommandText = sql;
-        cmd.ExecuteNonQuery();
-        trans.Commit();
+        var articles = new List<Article>();
+        using var conn = GetGlobalConnection();
+        using var cmd = conn.CreateCommand();
+        cmd.CommandText = "SELECT * FROM Articles";
+
+        using var reader = await cmd.ExecuteReaderAsync();
+        while (await reader.ReadAsync())
+        {
+            articles.Add(new Article
+            {
+                ArticleId = reader.GetGuid(reader.GetOrdinal("ArticleId")),
+                Title = reader.GetString(reader.GetOrdinal("Title")),
+                Contents = reader.GetString(reader.GetOrdinal("Contents")),
+                PublishingDate = reader.GetDateTime(reader.GetOrdinal("PublishingDate")),
+                AuthorId = reader.GetGuid(reader.GetOrdinal("AuthorId"))
+            });
+        }
+
+        return articles;
     }
 
-    // internal void InsertAllWords(Dictionary<string, int> res)
-    // {
-    //     foreach (var p in res)
-    //     {
-    //         var connection = coordinator.GetWordConnection(p.Key);
-    //         using (var transaction = connection.BeginTransaction())
-    //         {
-    //             var command = connection.CreateCommand();
-    //             command.Transaction = transaction;
-    //             command.CommandText = @"INSERT INTO Words(id, name) VALUES(@id,@name)";
-    //
-    //             var paramName = command.CreateParameter();
-    //             paramName.ParameterName = "name";
-    //             command.Parameters.Add(paramName);
-    //
-    //             var paramId = command.CreateParameter();
-    //             paramId.ParameterName = "id";
-    //             command.Parameters.Add(paramId);
-    //
-    //             paramName.Value = p.Key;
-    //             paramId.Value = p.Value;
-    //             command.ExecuteNonQuery();
-    //             
-    //             transaction.Commit();
-    //         }
-    //
-    //     }
-    // }
-    //
-    // internal void InsertAllOcc(int docId, ISet<int> wordIds)
-    // {
-    //     var connection = coordinator.GetOccurrenceConnection();
-    //     using (var transaction = connection.BeginTransaction())
-    //     {
-    //         var command = connection.CreateCommand();
-    //         command.Transaction = transaction;
-    //         command.CommandText = @"INSERT INTO Occurrences(wordId, docId) VALUES(@wordId,@docId)";
-    //
-    //         var paramwordId = command.CreateParameter();
-    //         paramwordId.ParameterName = "wordId";
-    //
-    //         command.Parameters.Add(paramwordId);
-    //
-    //         var paramDocId = command.CreateParameter();
-    //         paramDocId.ParameterName = "docId";
-    //         paramDocId.Value = docId;
-    //
-    //         command.Parameters.Add(paramDocId);
-    //
-    //         foreach (var wordId in wordIds)
-    //         {
-    //             paramwordId.Value = wordId;
-    //             command.ExecuteNonQuery();
-    //         }
-    //         transaction.Commit();
-    //     }
-    // }
-    //
-    // public void InsertDocument(int id, string url)
-    // {
-    //     var connection = coordinator.GetDocumentConnection();
-    //     var insertCmd = connection.CreateCommand();
-    //     insertCmd.CommandText = "INSERT INTO Documents(id, url) VALUES(@id,@url)";
-    //
-    //     var pName = new SqlParameter("url", url);
-    //     insertCmd.Parameters.Add(pName);
-    //
-    //     var pCount = new SqlParameter("id", id);
-    //     insertCmd.Parameters.Add(pCount);
-    //
-    //     insertCmd.ExecuteNonQuery();
-    // }
-    //
-    // public Dictionary<string, int> GetAllWords()
-    // {
-    //     Dictionary<string, int> res = new Dictionary<string, int>();
-    //
-    //     foreach (var connection in coordinator.GetAllWordConnections())
-    //     {
-    //         var selectCmd = connection.CreateCommand();
-    //         selectCmd.CommandText = "SELECT * FROM Words";
-    //
-    //         using (var reader = selectCmd.ExecuteReader())
-    //         {
-    //             while (reader.Read())
-    //             {
-    //                 var id = reader.GetInt32(0);
-    //                 var w = reader.GetString(1);
-    //
-    //                 res.Add(w, id);
-    //             }
-    //         }
-    //     }
-    //     return res;
-    // }
+    public async Task UpdateAsync(Article article)
+    {
+        using var conn = GetGlobalConnection();
+        using var cmd = conn.CreateCommand();
+        cmd.CommandText = @"
+            UPDATE Articles
+            SET Title = @Title, Contents = @Contents
+            WHERE ArticleId = @ArticleId";
+
+        cmd.Parameters.AddWithValue("@Title", article.Title);
+        cmd.Parameters.AddWithValue("@Contents", article.Contents);
+        cmd.Parameters.AddWithValue("@ArticleId", article.ArticleId);
+
+        await cmd.ExecuteNonQueryAsync();
+    }
+
+    public async Task DeleteAsync(Guid articleId)
+    {
+        using var conn = GetGlobalConnection();
+        using var cmd = conn.CreateCommand();
+        cmd.CommandText = "DELETE FROM Articles WHERE ArticleId = @ArticleId";
+        cmd.Parameters.AddWithValue("@ArticleId", articleId);
+
+        await cmd.ExecuteNonQueryAsync();
+    }
 }
