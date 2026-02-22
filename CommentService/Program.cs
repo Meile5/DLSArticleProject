@@ -1,5 +1,6 @@
 
 using CommentService.AppOptionsPattern;
+using CommentService.Clients;
 using CommentService.Database;
 using CommentService.Service;
 
@@ -50,6 +51,12 @@ public class Program
         
         // Add Services
         services.AddScoped<CommentsService>();
+        
+        // Add Profanity HTTP Client with circuit breaker
+        services.AddHttpClient<IProfanityClient, ProfanityClient>(client =>
+        {
+            client.BaseAddress = new Uri("http://profanity-service");
+        });
 
     }
 }
