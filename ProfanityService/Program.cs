@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using ProfanityService.AppOptionsPattern;
 using ProfanityService.Database;
 
@@ -13,6 +14,13 @@ public class Program
             var builder = WebApplication.CreateBuilder();
             ConfigureServices(builder.Services, builder.Configuration);
             var app = builder.Build();
+            
+            // Migrate/create database
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                db.Database.Migrate();
+            }
             
             // <snippet_UseSwagger>
             if (app.Environment.IsDevelopment())
