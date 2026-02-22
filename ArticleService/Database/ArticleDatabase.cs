@@ -1,5 +1,4 @@
 ﻿using ArticleService.Entities;
-using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
 
 namespace ArticleService.Database;
@@ -13,16 +12,17 @@ public class ArticleDatabase : IArticleRepository
         _coordinator = coordinator;
     }
 
-    private SqlConnection GetGlobalConnection() => (SqlConnection)_coordinator.GetContinentGlobal();
+    // You can pass a shard if you want, default is Global
+    private SqlConnection GetConnection(string shard = "Global") => _coordinator.GetConnection(shard);
 
-    public async Task<Article> CreateAsync(Article article)
+    public async Task<Article> CreateAsync(Article article, string shard = "Global")
     {
-        using var conn = GetGlobalConnection();
+        using var conn = GetConnection(shard);
         using var cmd = conn.CreateCommand();
         cmd.CommandText = @"
             INSERT INTO Articles (ArticleId, Title, Contents, PublishingDate, AuthorId)
             VALUES (@ArticleId, @Title, @Contents, @PublishingDate, @AuthorId)";
-        
+
         cmd.Parameters.AddWithValue("@ArticleId", article.ArticleId);
         cmd.Parameters.AddWithValue("@Title", article.Title);
         cmd.Parameters.AddWithValue("@Contents", article.Contents);
@@ -33,9 +33,9 @@ public class ArticleDatabase : IArticleRepository
         return article;
     }
 
-    public async Task<Article?> GetByIdAsync(Guid articleId)
+    public async Task<Article?> GetByIdAsync(Guid articleId, string shard = "Global")
     {
-        using var conn = GetGlobalConnection();
+        using var conn = GetConnection(shard);
         using var cmd = conn.CreateCommand();
         cmd.CommandText = "SELECT * FROM Articles WHERE ArticleId = @ArticleId";
         cmd.Parameters.AddWithValue("@ArticleId", articleId);
@@ -52,14 +52,13 @@ public class ArticleDatabase : IArticleRepository
                 AuthorId = reader.GetGuid(reader.GetOrdinal("AuthorId"))
             };
         }
-
         return null;
     }
 
-    public async Task<IEnumerable<Article>> GetAllAsync()
+    public async Task<IEnumerable<Article>> GetAllAsync(string shard = "Global")
     {
         var articles = new List<Article>();
-        using var conn = GetGlobalConnection();
+        using var conn = GetConnection(shard);
         using var cmd = conn.CreateCommand();
         cmd.CommandText = "SELECT * FROM Articles";
 
@@ -75,13 +74,12 @@ public class ArticleDatabase : IArticleRepository
                 AuthorId = reader.GetGuid(reader.GetOrdinal("AuthorId"))
             });
         }
-
         return articles;
     }
 
-    public async Task UpdateAsync(Article article)
+    public async Task UpdateAsync(Article article, string shard = "Global")
     {
-        using var conn = GetGlobalConnection();
+        using var conn = GetConnection(shard);
         using var cmd = conn.CreateCommand();
         cmd.CommandText = @"
             UPDATE Articles
@@ -95,9 +93,9 @@ public class ArticleDatabase : IArticleRepository
         await cmd.ExecuteNonQueryAsync();
     }
 
-    public async Task DeleteAsync(Guid articleId)
+    public async Task DeleteAsync(Guid articleId, string shard = "Global")
     {
-        using var conn = GetGlobalConnection();
+        using var conn = GetConnection(shard);
         using var cmd = conn.CreateCommand();
         cmd.CommandText = "DELETE FROM Articles WHERE ArticleId = @ArticleId";
         cmd.Parameters.AddWithValue("@ArticleId", articleId);
