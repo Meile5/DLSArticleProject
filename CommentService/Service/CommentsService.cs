@@ -1,6 +1,6 @@
 ﻿namespace CommentService.Service;
 
-public class CommentService
+public class CommentsService
 {
     //public async Task 
 }
