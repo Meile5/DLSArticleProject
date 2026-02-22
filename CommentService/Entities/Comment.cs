@@ -9,5 +9,7 @@ public partial class Comment
 
     public string Text { get; set; } = null!;
 
+    public string ArticleId { get; set; } = null!;
+
     public virtual ICollection<CommentUser> CommentUsers { get; set; } = new List<CommentUser>();
 }
