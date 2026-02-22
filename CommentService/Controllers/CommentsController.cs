@@ -1,6 +1,16 @@
+using Microsoft.AspNetCore.Mvc;
+using ProfanityService.Models.Dtos;
+
 namespace CommentService.Controllers;
 
-public class CommentsController
+
+[ApiController]
+[Route("[controller]")]
+public class CommentsController(Service.CommentsService commentService) : ControllerBase
 {
-    
+    [HttpPost]
+    public async Task <ActionResult > SaveComment(CommentDto commentDto)
+    {
+        
+    }
 }
