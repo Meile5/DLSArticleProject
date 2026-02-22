@@ -55,7 +55,8 @@ public class Program
         // Add Profanity HTTP Client with circuit breaker
         services.AddHttpClient<IProfanityClient, ProfanityClient>(client =>
         {
-            client.BaseAddress = new Uri("http://profanity-service");
+            //client.BaseAddress = new Uri("http://profanity-service");
+            client.BaseAddress = new Uri("http://localhost:5000/");
         });
 
     }

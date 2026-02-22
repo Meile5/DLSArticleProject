@@ -1,5 +1,6 @@
 using CommentService.Database;
 using CommentService.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CommentService.Repositories;
 
@@ -27,5 +28,21 @@ public class CommentsRepo(AppDbContext dbContext)
             throw;
         }
     }
-    
+
+    public async Task<List<Comment>> GetComments(string articleId)
+    {
+        try
+        {
+            return await dbContext.Comments
+                .Include(c => c.CommentUsers)
+                .Where(c => c.ArticleId == articleId)
+                .ToListAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+         
+    }
 }
