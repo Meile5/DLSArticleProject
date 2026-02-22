@@ -1,7 +1,55 @@
-using CommentService;
 
-var builder = Host.CreateApplicationBuilder(args);
-builder.Services.AddHostedService<Worker>();
+using CommentService.AppOptionsPattern;
+using CommentService.Database;
+using CommentService.Service;
 
-var host = builder.Build();
-host.Run();
+namespace CommentService;
+
+public class Program
+{
+    public static async Task Main()
+    {
+        try
+        {
+            var builder = WebApplication.CreateBuilder();
+            ConfigureServices(builder.Services, builder.Configuration);
+            var app = builder.Build();
+            
+            // <snippet_UseSwagger>
+            if (app.Environment.IsDevelopment())
+            {
+                app.MapOpenApi();
+                app.UseSwaggerUi(options =>
+                {
+                    options.DocumentPath = "/openapi/v1.json";
+                });
+            }
+            // </snippet_UseSwagger>
+            
+            app.MapControllers();
+            
+            await app.RunAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+
+    private static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddControllers();
+        
+        // Configure AppOptions 
+        services.AddAppOptions(configuration);
+        
+        // Add database
+        services.AddDataSourceAndRepositories();
+        
+        services.AddOpenApi();
+        
+        // Add Services
+        services.AddScoped<CommentsService>();
+
+    }
+}
