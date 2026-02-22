@@ -23,6 +23,7 @@ public partial class AppDbContext : DbContext
             entity.HasKey(e => e.CommentId).HasName("PK__Comments__C3B4DFCA68061A74");
 
             entity.Property(e => e.CommentId).HasMaxLength(50);
+            entity.Property(e => e.ArticleId).HasMaxLength(50);
             entity.Property(e => e.Text).HasMaxLength(200);
         });
 

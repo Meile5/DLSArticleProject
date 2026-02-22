@@ -1,0 +1,26 @@
+
+- Possible fix for the 403 error in circuit breaker:
+
+private readonly AsyncCircuitBreakerPolicy<HttpResponseMessage> _circuitBreaker =
+    Policy<HttpResponseMessage>
+        .Handle<HttpRequestException>()
+        .OrResult(r => !r.IsSuccessStatusCode)
+        .CircuitBreakerAsync(3, TimeSpan.FromSeconds(30));
+        
++
+
+var response = await _circuitBreaker.ExecuteAsync(() =>
+    httpClient.PostAsJsonAsync("/profanity", new ProfanityCommentDto { Comment = text })
+);
+
+if (!response.IsSuccessStatusCode)
+{
+    return false; // fallback behavior
+}
+
+return await response.Content.ReadFromJsonAsync<bool>();
+
+- remove:
+response.EnsureSuccessStatusCode();
+
+
