@@ -11,6 +11,8 @@ public class CommentsController(Service.CommentsService commentService) : Contro
     [HttpPost]
     public async Task <ActionResult > SaveComment(CommentDto commentDto)
     {
-        
+        throw NotImplementedException;
     }
+
+    public Exception NotImplementedException { get; set; }
 }
