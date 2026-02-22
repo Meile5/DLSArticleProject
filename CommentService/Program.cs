@@ -3,6 +3,7 @@ using CommentService.AppOptionsPattern;
 using CommentService.Clients;
 using CommentService.Database;
 using CommentService.Service;
+using Microsoft.EntityFrameworkCore;
 
 namespace CommentService;
 
@@ -15,6 +16,13 @@ public class Program
             var builder = WebApplication.CreateBuilder();
             ConfigureServices(builder.Services, builder.Configuration);
             var app = builder.Build();
+            
+            // Migrate/create database
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                db.Database.Migrate();
+            }
             
             // <snippet_UseSwagger>
             if (app.Environment.IsDevelopment())
