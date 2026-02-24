@@ -12,13 +12,11 @@ public class ArticleDatabase : IArticleRepository
         _coordinator = coordinator;
     }
 
-    // You can pass a shard if you want, default is Global
-    private SqlConnection GetConnection(string shard = "Global") => _coordinator.GetConnection(shard);
-
-    public async Task<Article> CreateAsync(Article article, string shard = "Global")
+    public async Task<Article> CreateAsync(Article article, Shard shard = Shard.Global)
     {
-        using var conn = GetConnection(shard);
-        using var cmd = conn.CreateCommand();
+        await using var conn = await _coordinator.GetConnectionAsync(shard);
+        await using var cmd = conn.CreateCommand();
+
         cmd.CommandText = @"
             INSERT INTO Articles (ArticleId, Title, Contents, PublishingDate, AuthorId)
             VALUES (@ArticleId, @Title, @Contents, @PublishingDate, @AuthorId)";
@@ -33,14 +31,16 @@ public class ArticleDatabase : IArticleRepository
         return article;
     }
 
-    public async Task<Article?> GetByIdAsync(Guid articleId, string shard = "Global")
+    public async Task<Article?> GetByIdAsync(Guid articleId, Shard shard = Shard.Global)
     {
-        using var conn = GetConnection(shard);
-        using var cmd = conn.CreateCommand();
+        await using var conn = await _coordinator.GetConnectionAsync(shard);
+        await using var cmd = conn.CreateCommand();
+
         cmd.CommandText = "SELECT * FROM Articles WHERE ArticleId = @ArticleId";
         cmd.Parameters.AddWithValue("@ArticleId", articleId);
 
-        using var reader = await cmd.ExecuteReaderAsync();
+        await using var reader = await cmd.ExecuteReaderAsync();
+
         if (await reader.ReadAsync())
         {
             return new Article
@@ -52,17 +52,21 @@ public class ArticleDatabase : IArticleRepository
                 AuthorId = reader.GetGuid(reader.GetOrdinal("AuthorId"))
             };
         }
+
         return null;
     }
 
-    public async Task<IEnumerable<Article>> GetAllAsync(string shard = "Global")
+    public async Task<IEnumerable<Article>> GetAllAsync(Shard shard = Shard.Global)
     {
         var articles = new List<Article>();
-        using var conn = GetConnection(shard);
-        using var cmd = conn.CreateCommand();
+
+        await using var conn = await _coordinator.GetConnectionAsync(shard);
+        await using var cmd = conn.CreateCommand();
+
         cmd.CommandText = "SELECT * FROM Articles";
 
-        using var reader = await cmd.ExecuteReaderAsync();
+        await using var reader = await cmd.ExecuteReaderAsync();
+
         while (await reader.ReadAsync())
         {
             articles.Add(new Article
@@ -74,29 +78,37 @@ public class ArticleDatabase : IArticleRepository
                 AuthorId = reader.GetGuid(reader.GetOrdinal("AuthorId"))
             });
         }
+
         return articles;
     }
 
-    public async Task UpdateAsync(Article article, string shard = "Global")
+    public async Task UpdateAsync(Article article, Shard shard = Shard.Global)
     {
-        using var conn = GetConnection(shard);
-        using var cmd = conn.CreateCommand();
+        await using var conn = await _coordinator.GetConnectionAsync(shard);
+        await using var cmd = conn.CreateCommand();
+
         cmd.CommandText = @"
             UPDATE Articles
-            SET Title = @Title, Contents = @Contents
+            SET Title = @Title,
+                Contents = @Contents,
+                PublishingDate = @PublishingDate,
+                AuthorId = @AuthorId
             WHERE ArticleId = @ArticleId";
 
         cmd.Parameters.AddWithValue("@Title", article.Title);
         cmd.Parameters.AddWithValue("@Contents", article.Contents);
+        cmd.Parameters.AddWithValue("@PublishingDate", article.PublishingDate);
+        cmd.Parameters.AddWithValue("@AuthorId", article.AuthorId);
         cmd.Parameters.AddWithValue("@ArticleId", article.ArticleId);
 
         await cmd.ExecuteNonQueryAsync();
     }
 
-    public async Task DeleteAsync(Guid articleId, string shard = "Global")
+    public async Task DeleteAsync(Guid articleId, Shard shard = Shard.Global)
     {
-        using var conn = GetConnection(shard);
-        using var cmd = conn.CreateCommand();
+        await using var conn = await _coordinator.GetConnectionAsync(shard);
+        await using var cmd = conn.CreateCommand();
+
         cmd.CommandText = "DELETE FROM Articles WHERE ArticleId = @ArticleId";
         cmd.Parameters.AddWithValue("@ArticleId", articleId);
 
