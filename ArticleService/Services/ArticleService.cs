@@ -13,7 +13,7 @@ public class ArticleService : IArticleService
         _repository = repository;
     }
 
-    public async Task<ArticleReadDto> CreateArticleAsync(ArticleCreateDto dto, string shard = "Global")
+    public async Task<ArticleReadDto> CreateArticleAsync(ArticleCreateDto dto, Shard shard = Shard.Global)
     {
         var article = new Article
         {
@@ -29,19 +29,19 @@ public class ArticleService : IArticleService
         return MapToReadDto(created);
     }
 
-    public async Task<ArticleReadDto?> GetArticleByIdAsync(Guid articleId, string shard = "Global")
+    public async Task<ArticleReadDto?> GetArticleByIdAsync(Guid articleId, Shard shard = Shard.Global)
     {
         var article = await _repository.GetByIdAsync(articleId, shard);
         return article == null ? null : MapToReadDto(article);
     }
 
-    public async Task<IEnumerable<ArticleReadDto>> GetAllArticlesAsync(string shard = "Global")
+    public async Task<IEnumerable<ArticleReadDto>> GetAllArticlesAsync(Shard shard = Shard.Global)
     {
         var articles = await _repository.GetAllAsync(shard);
         return articles.Select(MapToReadDto);
     }
 
-    public async Task<bool> UpdateArticleAsync(Guid articleId, ArticleUpdateDto dto, string shard = "Global")
+    public async Task<bool> UpdateArticleAsync(Guid articleId, ArticleUpdateDto dto, Shard shard = Shard.Global)
     {
         var existing = await _repository.GetByIdAsync(articleId, shard);
         if (existing == null)
@@ -54,7 +54,7 @@ public class ArticleService : IArticleService
         return true;
     }
 
-    public async Task<bool> DeleteArticleAsync(Guid articleId, string shard = "Global")
+    public async Task<bool> DeleteArticleAsync(Guid articleId, Shard shard = Shard.Global)
     {
         var existing = await _repository.GetByIdAsync(articleId, shard);
         if (existing == null) return false;

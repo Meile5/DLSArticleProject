@@ -1,4 +1,5 @@
 using ArticleService;
+using ArticleService.AppOptionsPattern;
 using ArticleService.Database;
 using ArticleService.Services;
 using Microsoft.AspNetCore.Builder;
@@ -19,6 +20,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddDbContext<ArticleDbContext>();
+builder.Services.AddAppOptions(builder.Configuration);
 builder.Services.AddSingleton<Coordinator>();
 builder.Services.AddScoped<IArticleRepository, ArticleDatabase>();
 builder.Services.AddScoped<IArticleService, ArticleService.Services.ArticleService>();

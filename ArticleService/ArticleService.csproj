@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Worker">
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UserSecretsId>dotnet-ArticleService-22ca3e2c-ad53-430e-8a35-93ed45cd7a2d</UserSecretsId>
@@ -10,16 +10,19 @@
 
     <ItemGroup>
         <!-- EF Core stable packages -->
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.12" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.12" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.12" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.3" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.3">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.3" />
 
         <!-- SQL Client -->
         <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.1" />
 
         <!-- Hosting & OpenAPI -->
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.11" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
 
         <!-- Swagger -->
         <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.3" />
