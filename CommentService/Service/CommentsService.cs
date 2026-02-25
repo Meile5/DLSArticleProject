@@ -9,6 +9,13 @@ public class CommentsService(CommentsRepo commentsRepo, IProfanityClient profani
 {
     public async Task SaveComment(CreateCommentDto createCommentDto)
     {
+        //for OpenTelemetry/Zipkin
+        using var activity = MonitorService.MonitorService.ActivitySource.StartActivity();
+        
+        //for Serilog debugging
+        MonitorService.MonitorService.Log.Debug("Entered SaveComment in CommentsService");
+
+        
         var comment = new Comment
         {
             CommentId = Guid.NewGuid().ToString(),
@@ -25,6 +32,11 @@ public class CommentsService(CommentsRepo commentsRepo, IProfanityClient profani
 
     public async Task<CommentsListDto> GetComments(ArticleDto articleDto)
     {
+        using var activity = MonitorService.MonitorService.ActivitySource.StartActivity();
+        
+        MonitorService.MonitorService.Log.Debug("Entered GetComments in CommentsService");
+
+        
         var comments = await commentsRepo.GetComments(articleDto.ArticleId);
         var commentsListDto = new CommentsListDto
         {

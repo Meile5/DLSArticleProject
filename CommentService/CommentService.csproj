@@ -23,4 +23,8 @@
     <ItemGroup>
       <Folder Include="Entities\" />
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MonitorService\MonitorService.csproj" />
+    </ItemGroup>
 </Project>
