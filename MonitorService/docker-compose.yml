@@ -1,0 +1,30 @@
+﻿services:
+  seq:
+    image: datalust/seq
+    ports:
+      - 5341:5341
+      - 5342:80
+    volumes:
+      - rps_seq_data:/data
+    environment:
+      - ACCEPT_EULA=Y
+      - SEQ_FIRSTRUN_NOAUTHENTICATION=True
+  
+  zipkin:      
+    image: openzipkin/zipkin
+    ports:
+      - 9411:9411
+
+  otel-collector:
+    image: otel/opentelemetry-collector:0.86.0
+    command: [ "--config=/etc/otel-collector-config.yaml" ]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "4317:4317"   # OTLP gRPC receiver
+      - "4318:4318"   # OTLP HTTP receiver
+    
+
+        
+volumes:
+  rps_seq_data:

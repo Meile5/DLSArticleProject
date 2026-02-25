@@ -6,7 +6,12 @@ namespace ProfanityService.Repositories;
 
 public class ProfanityRepo(AppDbContext dbContext)
 {
-    public async Task <List<Word>> GetWords(){
+    public async Task <List<Word>> GetWords()
+    {
+        using var activity = MonitorService.MonitorService.ActivitySource.StartActivity();
+        
+        MonitorService.MonitorService.Log.Debug("Entered GetWords in ProfanityRepo");
+        
         try
         {
             var words = await dbContext.Words

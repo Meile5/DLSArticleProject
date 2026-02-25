@@ -7,6 +7,10 @@ public class ProfanityService(ProfanityRepo profanityRepo)
 {
     public async Task <bool> CheckForbiddenWords(CommentDto comment)
     {
+        using var activity = MonitorService.MonitorService.ActivitySource.StartActivity();
+        
+        MonitorService.MonitorService.Log.Debug("Entered CheckForbiddenWords in ProfanityService");
+        
         var words = await profanityRepo.GetWords();
         
         foreach(var word in words)
