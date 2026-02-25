@@ -1,4 +1,4 @@
-version: '3.9'
+
 
 name: articleservice2
 services:
@@ -24,65 +24,65 @@ services:
     volumes:
       - mssql-continent-1:/var/opt/mssql
 
-  article-db-continent-2:
-    image: mcr.microsoft.com/mssql/server:latest
-    environment:
-      MSSQL_SA_PASSWORD: "SuperSecret7!"
-      ACCEPT_EULA: "Y"
-    ports:
-      - "1435:1433"
-    volumes:
-      - mssql-continent-2:/var/opt/mssql
-
-  article-db-continent-3:
-    image: mcr.microsoft.com/mssql/server:latest
-    environment:
-      MSSQL_SA_PASSWORD: "SuperSecret7!"
-      ACCEPT_EULA: "Y"
-    ports:
-      - "1436:1433"
-    volumes:
-      - mssql-continent-3:/var/opt/mssql
-
-  article-db-continent-4:
-    image: mcr.microsoft.com/mssql/server:latest
-    environment:
-      MSSQL_SA_PASSWORD: "SuperSecret7!"
-      ACCEPT_EULA: "Y"
-    ports:
-      - "1437:1433"
-    volumes:
-      - mssql-continent-4:/var/opt/mssql
-
-  article-db-continent-5:
-    image: mcr.microsoft.com/mssql/server:latest
-    environment:
-      MSSQL_SA_PASSWORD: "SuperSecret7!"
-      ACCEPT_EULA: "Y"
-    ports:
-      - "1438:1433"
-    volumes:
-      - mssql-continent-5:/var/opt/mssql
-
-  article-db-continent-6:
-    image: mcr.microsoft.com/mssql/server:latest
-    environment:
-      MSSQL_SA_PASSWORD: "SuperSecret7!"
-      ACCEPT_EULA: "Y"
-    ports:
-      - "1439:1433"
-    volumes:
-      - mssql-continent-6:/var/opt/mssql
-
-  article-db-continent-7:
-    image: mcr.microsoft.com/mssql/server:latest
-    environment:
-      MSSQL_SA_PASSWORD: "SuperSecret7!"
-      ACCEPT_EULA: "Y"
-    ports:
-      - "1440:1433"
-    volumes:
-      - mssql-continent-7:/var/opt/mssql
+#  article-db-continent-2:
+#    image: mcr.microsoft.com/mssql/server:latest
+#    environment:
+#      MSSQL_SA_PASSWORD: "SuperSecret7!"
+#      ACCEPT_EULA: "Y"
+#    ports:
+#      - "1435:1433"
+#    volumes:
+#      - mssql-continent-2:/var/opt/mssql
+#
+#  article-db-continent-3:
+#    image: mcr.microsoft.com/mssql/server:latest
+#    environment:
+#      MSSQL_SA_PASSWORD: "SuperSecret7!"
+#      ACCEPT_EULA: "Y"
+#    ports:
+#      - "1436:1433"
+#    volumes:
+#      - mssql-continent-3:/var/opt/mssql
+#
+#  article-db-continent-4:
+#    image: mcr.microsoft.com/mssql/server:latest
+#    environment:
+#      MSSQL_SA_PASSWORD: "SuperSecret7!"
+#      ACCEPT_EULA: "Y"
+#    ports:
+#      - "1437:1433"
+#    volumes:
+#      - mssql-continent-4:/var/opt/mssql
+#
+#  article-db-continent-5:
+#    image: mcr.microsoft.com/mssql/server:latest
+#    environment:
+#      MSSQL_SA_PASSWORD: "SuperSecret7!"
+#      ACCEPT_EULA: "Y"
+#    ports:
+#      - "1438:1433"
+#    volumes:
+#      - mssql-continent-5:/var/opt/mssql
+#
+#  article-db-continent-6:
+#    image: mcr.microsoft.com/mssql/server:latest
+#    environment:
+#      MSSQL_SA_PASSWORD: "SuperSecret7!"
+#      ACCEPT_EULA: "Y"
+#    ports:
+#      - "1439:1433"
+#    volumes:
+#      - mssql-continent-6:/var/opt/mssql
+#
+#  article-db-continent-7:
+#    image: mcr.microsoft.com/mssql/server:latest
+#    environment:
+#      MSSQL_SA_PASSWORD: "SuperSecret7!"
+#      ACCEPT_EULA: "Y"
+#    ports:
+#      - "1440:1433"
+#    volumes:
+#      - mssql-continent-7:/var/opt/mssql
 
   # --- ARTICLE SERVICE INSTANCES (X-axis) ---
   article-service-1:
@@ -92,12 +92,12 @@ services:
     depends_on:
       - article-db-global
       - article-db-continent-1
-      - article-db-continent-2
-      - article-db-continent-3
-      - article-db-continent-4
-      - article-db-continent-5
-      - article-db-continent-6
-      - article-db-continent-7
+     # - article-db-continent-2
+     # - article-db-continent-3
+      #- article-db-continent-4
+      #- article-db-continent-5
+      #- article-db-continent-6
+     # - article-db-continent-7
 
   article-service-2:
     build: .
@@ -106,12 +106,12 @@ services:
     depends_on:
       - article-db-global
       - article-db-continent-1
-      - article-db-continent-2
-      - article-db-continent-3
-      - article-db-continent-4
-      - article-db-continent-5
-      - article-db-continent-6
-      - article-db-continent-7
+     # - article-db-continent-2
+     # - article-db-continent-3
+     # - article-db-continent-4
+     # - article-db-continent-5
+     # - article-db-continent-6
+     # - article-db-continent-7
 
   article-service-3:
     build: .
@@ -120,12 +120,12 @@ services:
     depends_on:
       - article-db-global
       - article-db-continent-1
-      - article-db-continent-2
-      - article-db-continent-3
-      - article-db-continent-4
-      - article-db-continent-5
-      - article-db-continent-6
-      - article-db-continent-7
+    #  - article-db-continent-2
+    #  - article-db-continent-3
+    #  - article-db-continent-4
+    #  - article-db-continent-5
+     # - article-db-continent-6
+     # - article-db-continent-7
 
   # --- LOAD BALANCER ---
   article-lb:
@@ -136,16 +136,16 @@ services:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
       - article-service-1
-      - article-service-2
-      - article-service-3
+      #- article-service-2
+      #- article-service-3
 
 # --- VOLUMES ---
 volumes:
   mssql-global:
   mssql-continent-1:
-  mssql-continent-2:
-  mssql-continent-3:
-  mssql-continent-4:
-  mssql-continent-5:
-  mssql-continent-6:
-  mssql-continent-7:
+ # mssql-continent-2:
+ # mssql-continent-3:
+ # mssql-continent-4:
+ # mssql-continent-5:
+ # mssql-continent-6:
+ # mssql-continent-7:
