@@ -1,5 +1,5 @@
 ﻿# Use the .NET runtime for the final image
-FROM mcr.microsoft.com/dotnet/runtime:10.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
 WORKDIR /app
 
 # Use the SDK image for building the app
