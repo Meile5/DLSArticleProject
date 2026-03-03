@@ -10,6 +10,7 @@ GO
 
 CREATE TABLE Comments(
                          CommentId nvarchar(50) NOT NULL PRIMARY KEY,
+                         ArticleId nvarchar(50) NOT NULL,
                          Text nvarchar(200) NOT NULL
 
 );
