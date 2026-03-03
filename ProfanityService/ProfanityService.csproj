@@ -20,4 +20,8 @@
         <PackageReference Include="NSwag.AspNetCore" Version="14.6.3" />
         <PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.3" />
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MonitorService\MonitorService.csproj" />
+    </ItemGroup>
 </Project>
