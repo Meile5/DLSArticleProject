@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using MonitorService;
 using ProfanityService.Models.Dtos;
+using Serilog;
 
 namespace ProfanityService.Controllers;
 
@@ -10,6 +12,9 @@ public class ProfanityController(Service.ProfanityService profanityService) : Co
     [HttpPost]
     public async Task <ActionResult <bool>> CheckForForbiddenWords(CommentDto commentDto)
     {
+        using var activity = Monitoring.ActivitySource.StartActivity();
+        
+        Log.Logger.Debug("Entered CheckForForbiddenWords in ProfanityController");
         return await profanityService.CheckForbiddenWords(commentDto);
     }
 }

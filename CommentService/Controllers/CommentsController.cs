@@ -1,6 +1,8 @@
 using CommentService.Models.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using CommentService.Service;
+using MonitorService;
+using Serilog;
 
 namespace CommentService.Controllers;
 
@@ -14,10 +16,10 @@ public class CommentsController(CommentsService commentService) : ControllerBase
     public async Task<IActionResult> SaveComment(CreateCommentDto createCommentDto)
     {
         //for OpenTelemetry/Zipkin
-        using var activity = MonitorService.MonitorService.ActivitySource.StartActivity();
+        using var activity = Monitoring.ActivitySource.StartActivity();
         
         //for Serilog debugging
-        MonitorService.MonitorService.Log.Debug("Entered SaveComment in CommentsController");
+        Log.Logger.Debug("Entered SaveComment in CommentsController");
 
         
         await commentService.SaveComment(createCommentDto);
@@ -30,10 +32,10 @@ public class CommentsController(CommentsService commentService) : ControllerBase
     public async Task<ActionResult<CommentsListDto>> GetComments([FromQuery] ArticleDto articleDto)
     {
         //for OpenTelemetry/Zipkin
-        using var activity = MonitorService.MonitorService.ActivitySource.StartActivity();
+        using var activity = Monitoring.ActivitySource.StartActivity();
         
         //for Serilog debugging
-        MonitorService.MonitorService.Log.Debug("Entered GetComments in CommentsController");
+        Log.Logger.Debug("Entered GetComments in CommentsController");
 
         var result = await commentService.GetComments(articleDto);
         if (result.Comments.Count == 0)

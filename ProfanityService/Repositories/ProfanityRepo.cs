@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MonitorService;
 using ProfanityService.Database;
 using ProfanityService.Entities;
+using Serilog;
 
 namespace ProfanityService.Repositories;
 
@@ -8,9 +10,9 @@ public class ProfanityRepo(AppDbContext dbContext)
 {
     public async Task <List<Word>> GetWords()
     {
-        using var activity = MonitorService.MonitorService.ActivitySource.StartActivity();
+        using var activity = Monitoring.ActivitySource.StartActivity();
         
-        MonitorService.MonitorService.Log.Debug("Entered GetWords in ProfanityRepo");
+        Log.Logger.Debug("Entered GetWords in ProfanityRepo");
         
         try
         {
