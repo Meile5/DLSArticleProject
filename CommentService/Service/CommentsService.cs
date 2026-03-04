@@ -2,6 +2,8 @@
 using CommentService.Entities;
 using CommentService.Models.Dtos;
 using CommentService.Repositories;
+using MonitorService;
+using Serilog;
 
 namespace CommentService.Service;
 
@@ -10,10 +12,10 @@ public class CommentsService(CommentsRepo commentsRepo, IProfanityClient profani
     public async Task SaveComment(CreateCommentDto createCommentDto)
     {
         //for OpenTelemetry/Zipkin
-        using var activity = MonitorService.MonitorService.ActivitySource.StartActivity();
+        using var activity = Monitoring.ActivitySource.StartActivity();
         
         //for Serilog debugging
-        MonitorService.MonitorService.Log.Debug("Entered SaveComment in CommentsService");
+        Log.Logger.Debug("Entered SaveComment in CommentsService");
 
         
         var comment = new Comment
@@ -32,9 +34,9 @@ public class CommentsService(CommentsRepo commentsRepo, IProfanityClient profani
 
     public async Task<CommentsListDto> GetComments(ArticleDto articleDto)
     {
-        using var activity = MonitorService.MonitorService.ActivitySource.StartActivity();
+        using var activity = Monitoring.ActivitySource.StartActivity();
         
-        MonitorService.MonitorService.Log.Debug("Entered GetComments in CommentsService");
+        Log.Logger.Debug("Entered GetComments in CommentsService");
 
         
         var comments = await commentsRepo.GetComments(articleDto.ArticleId);

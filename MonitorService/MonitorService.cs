@@ -10,37 +10,34 @@ using ILogger = Serilog.ILogger;
 
 namespace MonitorService;
 
-public class MonitorService
+public static class Monitoring
 {
-    public static readonly string ServiceName = Assembly.GetCallingAssembly().GetName().Name ?? "unknown";
     public static TracerProvider TracerProvider;
-    public static ActivitySource ActivitySource = new ActivitySource(ServiceName); //used everytime a new method is called
+    public static readonly ActivitySource ActivitySource = new("MonitorService", "1.0.0"); //used everytime a new method is called
     
-    public static ILogger Log => Serilog.Log.Logger;
+    //public static ILogger Log => Serilog.Log.Logger;
     
     //static constructor
     //runs before the first instance is created or any static methods are called
-    static MonitorService()
+    static Monitoring()
     {
+        var serviceName = Assembly.GetExecutingAssembly().GetName().Name;
+        var version = "1.0.0";
+        
         //OpenTelemetry Setup (Tracing)
-        //can't seem to get this to work, probably because zipkin library is depreciated
         TracerProvider = Sdk.CreateTracerProviderBuilder()
-            .AddSource(ActivitySource.Name)
-            .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(ServiceName))
-            .AddConsoleExporter()
-            .AddOtlpExporter(config =>
-            {
-                config.Endpoint = new Uri("http://localhost:4317");
-            })
             .AddZipkinExporter()
+            .AddConsoleExporter()
+            .AddSource(ActivitySource.Name)
+            .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName: serviceName, serviceVersion: version))
             .Build();
         
-        //Serilog Setup (Debug, Logs, also tracing)
-        Serilog.Log.Logger = new LoggerConfiguration()
+        //Serilog Setup (Debug, Logs, also can get trace Ids )
+        Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Verbose()
+            .Enrich.WithSpan()
             .WriteTo.Console()
             .WriteTo.Seq("http://localhost:5341") //if you change the PORT make sure to change it here too
-            .Enrich.WithSpan()
             .CreateLogger();
         
         //if you want to see the logs in the seq website (for debugging)

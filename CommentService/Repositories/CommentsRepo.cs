@@ -1,6 +1,8 @@
 using CommentService.Database;
 using CommentService.Entities;
 using Microsoft.EntityFrameworkCore;
+using MonitorService;
+using Serilog;
 
 namespace CommentService.Repositories;
 
@@ -8,9 +10,9 @@ public class CommentsRepo(AppDbContext dbContext)
 {
     public async Task SaveComment(Comment comment, string userId)
     {
-        using var activity = MonitorService.MonitorService.ActivitySource.StartActivity();
+        using var activity = Monitoring.ActivitySource.StartActivity();
         
-        MonitorService.MonitorService.Log.Debug("Entered SaveComment in CommentsRepo with user {userId} & Comment {comment}", userId, comment.Text.Substring(0,15));
+        Log.Logger.Debug("Entered SaveComment in CommentsRepo with user {userId} & Comment {comment}", userId, comment.Text.Substring(0,15));
         
         try
         {
@@ -30,7 +32,7 @@ public class CommentsRepo(AppDbContext dbContext)
         catch (Exception e)
         {
             Console.WriteLine(e);
-            MonitorService.MonitorService.Log.Error("Failed to save Comment");
+            Log.Logger.Error("Failed to save Comment");
 
             throw;
         }
@@ -38,9 +40,9 @@ public class CommentsRepo(AppDbContext dbContext)
 
     public async Task<List<Comment>> GetComments(string articleId)
     {
-        using var activity = MonitorService.MonitorService.ActivitySource.StartActivity();
+        using var activity = Monitoring.ActivitySource.StartActivity();
 
-        MonitorService.MonitorService.Log.Debug("Entered GetComments in CommentsRepo");
+        Log.Logger.Debug("Entered GetComments in CommentsRepo");
         
         try
         {
@@ -52,7 +54,7 @@ public class CommentsRepo(AppDbContext dbContext)
         catch (Exception e)
         {
             Console.WriteLine(e);
-            MonitorService.MonitorService.Log.Error("Failed to get Comments");
+            Log.Logger.Error("Failed to get Comments");
             throw;
         }
          
