@@ -1,0 +1,4 @@
+services:
+  draft-db:
+    platform: linux/amd64
+    user: root
