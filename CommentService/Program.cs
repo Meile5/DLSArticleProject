@@ -4,6 +4,8 @@ using CommentService.Clients;
 using CommentService.Database;
 using CommentService.Service;
 using Microsoft.EntityFrameworkCore;
+using MonitorService;
+using OpenTelemetry.Trace;
 
 namespace CommentService;
 
@@ -47,6 +49,9 @@ public class Program
 
     private static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
+        services.AddOpenTelemetry().Setup();
+        services.AddSingleton(TracerProvider.Default.GetTracer(Monitoring.ActivitySource.Name));
+        
         services.AddControllers();
         
         // Configure AppOptions 

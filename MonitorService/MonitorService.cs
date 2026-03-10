@@ -5,7 +5,6 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Serilog;
 using Serilog.Enrichers.Span;
-using ILogger = Serilog.ILogger;
 
 
 namespace MonitorService;
@@ -26,6 +25,7 @@ public static class Monitoring
         
         //OpenTelemetry Setup (Tracing)
         TracerProvider = Sdk.CreateTracerProviderBuilder()
+            .AddAspNetCoreInstrumentation()
             .AddZipkinExporter()
             .AddConsoleExporter()
             .AddSource(ActivitySource.Name)
@@ -44,5 +44,27 @@ public static class Monitoring
         //run the docker container for this service and go to localhost:5342
         //or whatever port you assigned to port 80 in the docker-compose
         
+    }
+    
+    public static OpenTelemetryBuilder Setup(this OpenTelemetryBuilder builder)
+    {
+        var serviceName = ActivitySource.Name;
+        var serviceVersion = "1.0.0";
+    
+        return builder.WithTracing(tcb =>
+        {
+            tcb
+                .AddSource(serviceName)
+                .AddZipkinExporter(c =>
+                {
+                    c.Endpoint = new Uri("http://zipkin:9411/api/v2/spans");
+                })
+                .AddConsoleExporter()
+                .SetResourceBuilder(
+                    ResourceBuilder.CreateDefault()
+                        .AddService(serviceName: serviceName, serviceVersion: serviceVersion))
+                .AddAspNetCoreInstrumentation()
+                .AddConsoleExporter();
+        });
     }
 }

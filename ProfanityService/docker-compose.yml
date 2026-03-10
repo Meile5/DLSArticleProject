@@ -1,3 +1,4 @@
+name: profanity-service
 services:
   profanity-db:
     image: mcr.microsoft.com/mssql/server:latest
