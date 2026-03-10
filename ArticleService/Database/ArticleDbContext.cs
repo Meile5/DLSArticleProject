@@ -11,7 +11,6 @@ public class ArticleDbContext : DbContext
     }
 
     public DbSet<Article> Articles { get; set; } = null!;
-    public DbSet<Author> Authors { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -21,17 +20,8 @@ public class ArticleDbContext : DbContext
             entity.Property(a => a.Title).IsRequired();
             entity.Property(a => a.Contents).IsRequired();
             entity.Property(a => a.PublishingDate).IsRequired();
-            entity.HasOne<Author>()
-                  .WithMany()
-                  .HasForeignKey(a => a.AuthorId)
-                  .OnDelete(DeleteBehavior.Cascade);
+            entity.Property(a=>a.AuthorName).IsRequired();
         });
-
-        modelBuilder.Entity<Author>(entity =>
-        {
-            entity.HasKey(a => a.AuthorId);
-            entity.Property(a => a.AuthorName).IsRequired();
-            entity.Property(a => a.AuthorLastName).IsRequired();
-        });
+        
     }
 }

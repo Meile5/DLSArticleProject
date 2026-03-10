@@ -21,7 +21,7 @@ public class ArticleService : IArticleService
             Title = dto.Title,
             Contents = dto.Contents,
             PublishingDate = dto.PublishingDate,
-            AuthorId = dto.AuthorId
+            AuthorName = dto.AuthorName
         };
 
         // Pass shard to repository if implemented
@@ -69,6 +69,6 @@ public class ArticleService : IArticleService
         Title = article.Title,
         Contents = article.Contents,
         PublishingDate = article.PublishingDate,
-        AuthorId = article.AuthorId
+        AuthorName = article.AuthorName
     };
 }
