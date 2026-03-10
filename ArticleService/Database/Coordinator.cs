@@ -18,7 +18,7 @@ public class Coordinator
     {
         var shardName = shard.ToString();
 
-        if (!_options.ConnectionStrings.TryGetValue(shardName, out var connStr))
+        if (!_options.Shards.TryGetValue(shardName, out var connStr))
             throw new ArgumentException($"Shard '{shardName}' not configured.");
 
         var connection = new SqlConnection(connStr);
