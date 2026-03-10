@@ -4,6 +4,7 @@ using ArticleService.BackgroundServices;
 using ArticleService.Database;
 using ArticleService.Services;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args); 
 
@@ -20,12 +21,17 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddDbContext<ArticleDbContext>();
-builder.Services.AddAppOptions(builder.Configuration);
+var appOptions = builder.Services.AddAppOptions(builder.Configuration);
 builder.Services.AddSingleton<Coordinator>();
+builder.Services.AddDbContext<ArticleDbContext>(options =>
+{
+    options.UseSqlServer(appOptions.Shards["Global"]);
+});
 builder.Services.AddScoped<IArticleRepository, ArticleDatabase>();
 builder.Services.AddScoped<IArticleService, ArticleService.Services.ArticleService>();
-builder.Services.AddMessageClient(builder.Configuration.GetConnectionString("RabbitMqConstring"));
+builder.Services.AddMessageClient(
+    appOptions.ConnectionStrings["RabbitMqConstring"]
+);
 builder.Services.AddHostedService<EasyNetQSubscriberService>();
 
 builder.Services.AddControllers();
