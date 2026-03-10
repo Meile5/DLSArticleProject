@@ -10,9 +10,10 @@ public class CommentsRepo(AppDbContext dbContext)
 {
     public async Task SaveComment(Comment comment, string userId)
     {
-        using var activity = Monitoring.ActivitySource.StartActivity();
+        string shortenedComment = comment.Text.Substring(0, 15); //purely used for monitoring
+        using var activity = Monitoring.ActivitySource.StartActivity("Entered SaveComment in CommentsRepo with user "+ userId + " & Comment " + shortenedComment);
         
-        Log.Logger.Debug("Entered SaveComment in CommentsRepo with user {userId} & Comment {comment}", userId, comment.Text.Substring(0,15));
+        Log.Logger.Debug("Entered SaveComment in CommentsRepo with user {userId} & Comment {comment}", userId, shortenedComment);
         
         try
         {
@@ -40,7 +41,7 @@ public class CommentsRepo(AppDbContext dbContext)
 
     public async Task<List<Comment>> GetComments(string articleId)
     {
-        using var activity = Monitoring.ActivitySource.StartActivity();
+        using var activity = Monitoring.ActivitySource.StartActivity("Entered GetComments in CommentsRepo");
 
         Log.Logger.Debug("Entered GetComments in CommentsRepo");
         

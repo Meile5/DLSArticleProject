@@ -9,7 +9,7 @@ public class ProfanityService(ProfanityRepo profanityRepo)
 {
     public async Task <bool> CheckForbiddenWords(CommentDto comment)
     {
-        using var activity = Monitoring.ActivitySource.StartActivity();
+        using var activity = Monitoring.ActivitySource.StartActivity("Entered CheckForbiddenWords in ProfanityService");
         
         Log.Logger.Debug("Entered CheckForbiddenWords in ProfanityService");
         

@@ -12,9 +12,9 @@ public class ProfanityController(Service.ProfanityService profanityService) : Co
     [HttpPost]
     public async Task <ActionResult <bool>> CheckForForbiddenWords(CommentDto commentDto)
     {
-        using var activity = Monitoring.ActivitySource.StartActivity();
+        using var activity = Monitoring.ActivitySource.StartActivity("Entered CheckForForbiddenWords in ProfanityController (POST Request)");
         
-        Log.Logger.Debug("Entered CheckForForbiddenWords in ProfanityController");
+        Log.Logger.Debug("Entered CheckForForbiddenWords in ProfanityController (POST Request)");
         return await profanityService.CheckForbiddenWords(commentDto);
     }
 }
