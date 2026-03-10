@@ -1,9 +1,10 @@
-namespace ArticleService.Entities;
+namespace Shared;
 
-public class Article
+public class ArticlePublishedEvent
 {
-    public Guid ArticleId { get; set; } 
+    public Guid ArticleId { get; set; }
     public string Title { get; set; } = string.Empty;
     public string Contents { get; set; } = string.Empty;
     public DateTime PublishingDate { get; set; }
-    public string AuthorName { get; set; } = string.Empty;}
+    public string AuthorName { get; set; } = string.Empty;
+}

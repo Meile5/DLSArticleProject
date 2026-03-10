@@ -15,7 +15,6 @@ public class ArticlesController : ControllerBase
         _service = service;
     }
 
-    // CREATE
     [HttpPost]
     public async Task<ActionResult<ArticleReadDto>> CreateArticle([FromBody] ArticleCreateDto dto)
     {
@@ -27,7 +26,6 @@ public class ArticlesController : ControllerBase
         );
     }
 
-    // GET by ID
     [HttpGet("{articleId}")]
     public async Task<ActionResult<ArticleReadDto>> GetArticleById(Guid articleId)
     {
@@ -37,7 +35,6 @@ public class ArticlesController : ControllerBase
         return Ok(article);
     }
 
-    // GET all
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ArticleReadDto>>> GetAllArticles()
     {
@@ -45,7 +42,6 @@ public class ArticlesController : ControllerBase
         return Ok(articles);
     }
 
-    // UPDATE
     [HttpPut("{articleId}")]
     public async Task<IActionResult> UpdateArticle(Guid articleId, [FromBody] ArticleUpdateDto dto)
     {
@@ -55,7 +51,6 @@ public class ArticlesController : ControllerBase
         return NoContent();
     }
 
-    // DELETE
     [HttpDelete("{articleId}")]
     public async Task<IActionResult> DeleteArticle(Guid articleId)
     {
