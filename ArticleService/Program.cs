@@ -1,5 +1,6 @@
 using ArticleService;
 using ArticleService.AppOptionsPattern;
+using ArticleService.BackgroundServices;
 using ArticleService.Database;
 using ArticleService.Services;
 using Microsoft.AspNetCore.Builder;
@@ -24,6 +25,8 @@ builder.Services.AddAppOptions(builder.Configuration);
 builder.Services.AddSingleton<Coordinator>();
 builder.Services.AddScoped<IArticleRepository, ArticleDatabase>();
 builder.Services.AddScoped<IArticleService, ArticleService.Services.ArticleService>();
+builder.Services.AddMessageClient(builder.Configuration.GetConnectionString("RabbitMqConstring"));
+builder.Services.AddHostedService<EasyNetQSubscriberService>();
 
 builder.Services.AddControllers();
 var app = builder.Build();

@@ -5,7 +5,7 @@ namespace ArticleService.Dtos
         public string Title { get; set; } = string.Empty;
         public string Contents { get; set; } = string.Empty;
         public DateTime PublishingDate { get; set; }
-        public Guid AuthorId { get; set; }
+        public string AuthorName { get; set; }
     }
 
     public class ArticleReadDto
@@ -14,12 +14,15 @@ namespace ArticleService.Dtos
         public string Title { get; set; } = string.Empty;
         public string Contents { get; set; } = string.Empty;
         public DateTime PublishingDate { get; set; }
-        public Guid AuthorId { get; set; }
+        public string AuthorName { get; set; }
     }
 
     public class ArticleUpdateDto
     {
         public string Title { get; set; } = string.Empty;
         public string Contents { get; set; } = string.Empty;
+        
+        public string AuthorName { get; set; }
+
     }
 }

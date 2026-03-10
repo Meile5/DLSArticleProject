@@ -18,14 +18,14 @@ public class ArticleDatabase : IArticleRepository
         await using var cmd = conn.CreateCommand();
 
         cmd.CommandText = @"
-            INSERT INTO Articles (ArticleId, Title, Contents, PublishingDate, AuthorId)
-            VALUES (@ArticleId, @Title, @Contents, @PublishingDate, @AuthorId)";
+            INSERT INTO Articles (ArticleId, Title, Contents, PublishingDate, AuthorName)
+            VALUES (@ArticleId, @Title, @Contents, @PublishingDate, @AuthorName)";
 
         cmd.Parameters.AddWithValue("@ArticleId", article.ArticleId);
         cmd.Parameters.AddWithValue("@Title", article.Title);
         cmd.Parameters.AddWithValue("@Contents", article.Contents);
         cmd.Parameters.AddWithValue("@PublishingDate", article.PublishingDate);
-        cmd.Parameters.AddWithValue("@AuthorId", article.AuthorId);
+        cmd.Parameters.AddWithValue("@AuthorName", article.AuthorName);
 
         await cmd.ExecuteNonQueryAsync();
         return article;
@@ -49,7 +49,7 @@ public class ArticleDatabase : IArticleRepository
                 Title = reader.GetString(reader.GetOrdinal("Title")),
                 Contents = reader.GetString(reader.GetOrdinal("Contents")),
                 PublishingDate = reader.GetDateTime(reader.GetOrdinal("PublishingDate")),
-                AuthorId = reader.GetGuid(reader.GetOrdinal("AuthorId"))
+                AuthorName = reader.GetString(reader.GetOrdinal("AuthorName"))
             };
         }
 
@@ -75,7 +75,7 @@ public class ArticleDatabase : IArticleRepository
                 Title = reader.GetString(reader.GetOrdinal("Title")),
                 Contents = reader.GetString(reader.GetOrdinal("Contents")),
                 PublishingDate = reader.GetDateTime(reader.GetOrdinal("PublishingDate")),
-                AuthorId = reader.GetGuid(reader.GetOrdinal("AuthorId"))
+                AuthorName = reader.GetString(reader.GetOrdinal("AuthorName"))
             });
         }
 
@@ -92,13 +92,13 @@ public class ArticleDatabase : IArticleRepository
             SET Title = @Title,
                 Contents = @Contents,
                 PublishingDate = @PublishingDate,
-                AuthorId = @AuthorId
+                AuthorName = @AuthorName
             WHERE ArticleId = @ArticleId";
 
         cmd.Parameters.AddWithValue("@Title", article.Title);
         cmd.Parameters.AddWithValue("@Contents", article.Contents);
         cmd.Parameters.AddWithValue("@PublishingDate", article.PublishingDate);
-        cmd.Parameters.AddWithValue("@AuthorId", article.AuthorId);
+        cmd.Parameters.AddWithValue("@AuthorName", article.AuthorName);
         cmd.Parameters.AddWithValue("@ArticleId", article.ArticleId);
 
         await cmd.ExecuteNonQueryAsync();
@@ -110,7 +110,7 @@ public class ArticleDatabase : IArticleRepository
         await using var cmd = conn.CreateCommand();
 
         cmd.CommandText = "DELETE FROM Articles WHERE ArticleId = @ArticleId";
-        cmd.Parameters.AddWithValue("@ArticleId", articleId);
+        cmd.Parameters.AddWithValue("@ArticleName", articleId);
 
         await cmd.ExecuteNonQueryAsync();
     }
