@@ -1,11 +1,11 @@
 using ArticleService;
+using ArticleService.AppOptionsPattern;
+using ArticleService.Database;
+using ArticleService.Services;
 using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args); 
-//builder.Services.AddHostedService<Worker>();
 
-
-//swagger stuff
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -18,6 +18,12 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader();
     });
 });
+
+builder.Services.AddDbContext<ArticleDbContext>();
+builder.Services.AddAppOptions(builder.Configuration);
+builder.Services.AddSingleton<Coordinator>();
+builder.Services.AddScoped<IArticleRepository, ArticleDatabase>();
+builder.Services.AddScoped<IArticleService, ArticleService.Services.ArticleService>();
 
 builder.Services.AddControllers();
 var app = builder.Build();
