@@ -1,3 +1,4 @@
+name: comment-service
 services:
   comment-db:
     image: mcr.microsoft.com/mssql/server:latest

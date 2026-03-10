@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using MonitorService;
+using OpenTelemetry.Trace;
 using ProfanityService.AppOptionsPattern;
 using ProfanityService.Database;
 
@@ -45,6 +47,9 @@ public class Program
 
     private static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
+        services.AddOpenTelemetry().Setup();
+        services.AddSingleton(TracerProvider.Default.GetTracer(Monitoring.ActivitySource.Name));
+
         services.AddControllers();
         services.AddAppOptions(configuration);
         services.AddDataSourceAndRepositories();
