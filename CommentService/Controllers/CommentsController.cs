@@ -16,10 +16,10 @@ public class CommentsController(CommentsService commentService) : ControllerBase
     public async Task<IActionResult> SaveComment(CreateCommentDto createCommentDto)
     {
         //for OpenTelemetry/Zipkin
-        using var activity = Monitoring.ActivitySource.StartActivity();
+        using var activity = Monitoring.ActivitySource.StartActivity("Entered SaveComment in CommentsController (POST Request)");
         
         //for Serilog debugging
-        Log.Logger.Debug("Entered SaveComment in CommentsController");
+        Log.Logger.Debug("Entered SaveComment in CommentsController (POST request)");
 
         
         await commentService.SaveComment(createCommentDto);
@@ -32,10 +32,10 @@ public class CommentsController(CommentsService commentService) : ControllerBase
     public async Task<ActionResult<CommentsListDto>> GetComments([FromQuery] ArticleDto articleDto)
     {
         //for OpenTelemetry/Zipkin
-        using var activity = Monitoring.ActivitySource.StartActivity();
+        using var activity = Monitoring.ActivitySource.StartActivity("Entered GetComments in CommentsController (GET Request)");
         
         //for Serilog debugging
-        Log.Logger.Debug("Entered GetComments in CommentsController");
+        Log.Logger.Debug("Entered GetComments in CommentsController (GET Request)");
 
         var result = await commentService.GetComments(articleDto);
         if (result.Comments.Count == 0)

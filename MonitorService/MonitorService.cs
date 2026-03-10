@@ -23,7 +23,8 @@ public static class Monitoring
         var serviceName = Assembly.GetExecutingAssembly().GetName().Name;
         var version = "1.0.0";
         
-        //OpenTelemetry Setup (Tracing)
+        //OpenTelemetry (otl) Setup (Tracing)
+        //this code is still needed, zipkin/otl doesn't Work Without it
         TracerProvider = Sdk.CreateTracerProviderBuilder()
             .AddAspNetCoreInstrumentation()
             .AddZipkinExporter()
@@ -31,6 +32,7 @@ public static class Monitoring
             .AddSource(ActivitySource.Name)
             .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName: serviceName, serviceVersion: version))
             .Build();
+        
         
         //Serilog Setup (Debug, Logs, also can get trace Ids )
         Log.Logger = new LoggerConfiguration()
@@ -46,6 +48,7 @@ public static class Monitoring
         
     }
     
+    //for setting up OpenTelemetry specifically for other services
     public static OpenTelemetryBuilder Setup(this OpenTelemetryBuilder builder)
     {
         var serviceName = ActivitySource.Name;
