@@ -1,30 +1,67 @@
-﻿using ArticleService.Database;
+﻿using ArticleService.Dtos;
+using ArticleService.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArticleService.Controllers;
 
 [ApiController]
-[Route("Article")]
-public class ArticleController : ControllerBase
+[Route("api/v1/[controller]")]
+public class ArticlesController : ControllerBase
 {
-    private ArticleDatabase database = ArticleDatabase.GetInstance();
-    
-    [HttpGet]
-    public async Task<IActionResult> Get()
+    private readonly IArticleService _service;
+
+    public ArticlesController(IArticleService service)
     {
-        Console.WriteLine("called GET request");
-        return Ok(database.GetAllArticles());
-    }
-    
-    [HttpDelete]
-    public void Delete()
-    {
-        database.DeleteDatabase();
+        _service = service;
     }
 
+    // CREATE
     [HttpPost]
-    public void Post()
+    public async Task<ActionResult<ArticleReadDto>> CreateArticle([FromBody] ArticleCreateDto dto)
     {
-        database.RecreateDatabase();
+        var created = await _service.CreateArticleAsync(dto);
+        return CreatedAtAction(
+            nameof(GetArticleById),
+            new { articleId = created.ArticleId },
+            created
+        );
+    }
+
+    // GET by ID
+    [HttpGet("{articleId}")]
+    public async Task<ActionResult<ArticleReadDto>> GetArticleById(Guid articleId)
+    {
+        var article = await _service.GetArticleByIdAsync(articleId);
+        if (article == null)
+            return NotFound();
+        return Ok(article);
+    }
+
+    // GET all
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<ArticleReadDto>>> GetAllArticles()
+    {
+        var articles = await _service.GetAllArticlesAsync();
+        return Ok(articles);
+    }
+
+    // UPDATE
+    [HttpPut("{articleId}")]
+    public async Task<IActionResult> UpdateArticle(Guid articleId, [FromBody] ArticleUpdateDto dto)
+    {
+        var updated = await _service.UpdateArticleAsync(articleId, dto);
+        if (!updated)
+            return NotFound();
+        return NoContent();
+    }
+
+    // DELETE
+    [HttpDelete("{articleId}")]
+    public async Task<IActionResult> DeleteArticle(Guid articleId)
+    {
+        var deleted = await _service.DeleteArticleAsync(articleId);
+        if (!deleted)
+            return NotFound();
+        return NoContent();
     }
 }
