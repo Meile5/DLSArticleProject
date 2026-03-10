@@ -6,13 +6,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfanityService", "ProfanityService\ProfanityService.csproj", "{DEEBA13F-F6BC-4461-94D6-B4393984862A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6EC96725-F3F0-4F86-BB1C-1F4CABEF2E19}"
-	ProjectSection(SolutionItems) = preProject
-		compose.yaml = compose.yaml
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonitorService", "MonitorService\MonitorService.csproj", "{46C6384D-1F1F-4704-9E27-6ED526753A76}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DraftService", "DraftService\DraftService.csproj", "{55CDB031-18AC-4812-AF18-4A2A3AC01EDE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticleQueue", "ArticleQueue\ArticleQueue.csproj", "{9C7A18EF-EA89-40FD-826F-A955EFBA18F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,5 +43,9 @@ Global
 		{55CDB031-18AC-4812-AF18-4A2A3AC01EDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55CDB031-18AC-4812-AF18-4A2A3AC01EDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55CDB031-18AC-4812-AF18-4A2A3AC01EDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C7A18EF-EA89-40FD-826F-A955EFBA18F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C7A18EF-EA89-40FD-826F-A955EFBA18F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C7A18EF-EA89-40FD-826F-A955EFBA18F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C7A18EF-EA89-40FD-826F-A955EFBA18F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
