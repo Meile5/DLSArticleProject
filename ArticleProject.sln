@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DraftService", "DraftServic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{88173AF3-4EC4-48FE-8701-5D3D72E7FD18}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticleQueue", "ArticleQueue\ArticleQueue.csproj", "{9C7A18EF-EA89-40FD-826F-A955EFBA18F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,5 +52,9 @@ Global
 		{88173AF3-4EC4-48FE-8701-5D3D72E7FD18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88173AF3-4EC4-48FE-8701-5D3D72E7FD18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88173AF3-4EC4-48FE-8701-5D3D72E7FD18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C7A18EF-EA89-40FD-826F-A955EFBA18F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C7A18EF-EA89-40FD-826F-A955EFBA18F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C7A18EF-EA89-40FD-826F-A955EFBA18F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C7A18EF-EA89-40FD-826F-A955EFBA18F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
