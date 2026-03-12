@@ -10,4 +10,12 @@
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ArticleQueue\ArticleQueue.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Implementation\" />
+    </ItemGroup>
+
 </Project>
