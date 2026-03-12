@@ -7,7 +7,7 @@ using Serilog;
 
 namespace CommentService.Service;
 
-public class CommentsService(CommentsRepo commentsRepo, IProfanityClient profanityClient)
+public class CommentsService(CommentsRepo commentsRepo, IProfanityClient profanityClient, CacheService cacheService)
 {
     public async Task SaveComment(CreateCommentDto createCommentDto)
     {
@@ -29,7 +29,30 @@ public class CommentsService(CommentsRepo commentsRepo, IProfanityClient profani
         {
             throw new Exception("Comment contains forbidden words");
         }
+
+        var commentDto = new CommentResponseDto
+        {
+            CommentId = comment.CommentId,
+            ArticleId = comment.ArticleId,
+            Comment = comment.Text,
+
+        };
         await commentsRepo.SaveComment(comment,  createCommentDto.UserId);
+        var commentCacheList = await cacheService.GetAsync<List<CommentResponseDto>>(createCommentDto.ArticleId);
+        
+        if (commentCacheList != null)
+        {
+            commentCacheList.Add(commentDto);
+            await cacheService.SetAsync(createCommentDto.ArticleId, commentCacheList );
+            
+        }else
+        {
+            var commentlist = new List<CommentResponseDto>();
+            commentlist.Add(commentDto);
+
+            await cacheService.SetAsync(createCommentDto.ArticleId, commentlist);
+            
+        }
     }
 
     public async Task<CommentsListDto> GetComments(ArticleDto articleDto)
@@ -37,13 +60,19 @@ public class CommentsService(CommentsRepo commentsRepo, IProfanityClient profani
         using var activity = Monitoring.ActivitySource.StartActivity("Entered GetComments in CommentsService");
         
         Log.Logger.Debug("Entered GetComments in CommentsService");
+        
+        var commentList = await cacheService.GetAsync<List<Comment>>(articleDto.ArticleId);
+        var commentsListDto = new CommentsListDto();
 
+        if (commentList != null)
+        {
+            commentsListDto.Comments = commentList.Select(c => CommentsListDto.FromEntity(c)).ToList();
+            return commentsListDto;
+        }
         
         var comments = await commentsRepo.GetComments(articleDto.ArticleId);
-        var commentsListDto = new CommentsListDto
-        {
-            Comments = comments.Select(c => CommentsListDto.FromEntity(c)).ToList()
-        };
+        commentsListDto.Comments = comments.Select(c => CommentsListDto.FromEntity(c)).ToList();
+        await cacheService.SetAsync(articleDto.ArticleId, comments);
 
         return commentsListDto;
         

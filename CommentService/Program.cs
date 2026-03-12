@@ -6,6 +6,7 @@ using CommentService.Service;
 using Microsoft.EntityFrameworkCore;
 using MonitorService;
 using OpenTelemetry.Trace;
+using StackExchange.Redis;
 
 namespace CommentService;
 
@@ -49,6 +50,14 @@ public class Program
 
     private static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
+        services.AddSingleton<IConnectionMultiplexer>(sp =>
+        {
+            var redisConfiguration = configuration.GetConnectionString("Redis");
+            return ConnectionMultiplexer.Connect(redisConfiguration);
+        });
+        
+        services.AddScoped<CacheService>();
+        
         services.AddOpenTelemetry().Setup();
         services.AddSingleton(TracerProvider.Default.GetTracer(Monitoring.ActivitySource.Name));
         
