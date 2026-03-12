@@ -10,12 +10,9 @@ builder.Services.AddOpenApi();
 var options = builder.Services.MessageClientOptions(builder.Configuration);
 builder.Services.AddRabbitMqMessageClient(options);
 builder.Services.AddMessagingHandlers(typeof(Program).Assembly);
+builder.Services.AddMessagingHandlers(typeof(NewsletterService.Handlers.NewsletterHandler).Assembly);
 builder.Services.AddSubscription<ArticlePublishedEvent>("your-unique-subscription-id");
-builder.Services.AddSingleton<NewsletterService.Services.NewsletterService>(); 
-
-    
-var options2 = builder.Services.MessageClientOptions(builder.Configuration);
-builder.Services.AddRabbitMqMessageClient(options2);
+builder.Services.AddScoped<NewsletterService.Services.NewsletterService>(); 
 
 var app = builder.Build();
 
@@ -24,8 +21,6 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
-
-
 
 app.UseHttpsRedirection();
 app.Run();

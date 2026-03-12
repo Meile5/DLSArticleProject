@@ -8,7 +8,7 @@ public class NewsletterService(IMessageClient _client)
 {
     public async Task NewsletterAsync (ArticlePublishedEvent request)
         {
-            await _client.Publish(new NewsletterEvent
+            await _client.Publish<NewsletterEvent>(new NewsletterEvent
             {
                 ArticleId = request.ArticleId,
                 Title = request.Title,

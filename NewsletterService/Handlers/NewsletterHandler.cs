@@ -7,7 +7,7 @@ public class NewsletterHandler(Services.NewsletterService service): IMessageHand
 
     public async Task HandleAsync(ArticlePublishedEvent message, CancellationToken ct)
     {
-        service.NewsletterAsync(message);
+        await service.NewsletterAsync(message);
     }
     
 }
