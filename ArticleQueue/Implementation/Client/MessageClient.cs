@@ -7,7 +7,7 @@ public class MessageClient(IMessageAdapter adapter) : IMessageClient
 {
     public async Task Subscribe<T>(string subscriptionId, MessageHandler<T>? handler = null, CancellationToken token = default)
     {
-        await adapter.Subscribe(subscriptionId, handler == null ? handler : null, token );
+        await adapter.Subscribe(subscriptionId, handler, token );
     }
 
     public async Task Publish<T>(T message, CancellationToken token = default)
