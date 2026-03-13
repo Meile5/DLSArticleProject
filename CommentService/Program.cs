@@ -6,6 +6,7 @@ using CommentService.Service;
 using Microsoft.EntityFrameworkCore;
 using MonitorService;
 using OpenTelemetry.Trace;
+using Prometheus;
 using StackExchange.Redis;
 
 namespace CommentService;
@@ -39,7 +40,7 @@ public class Program
             // </snippet_UseSwagger>
             
             app.MapControllers();
-            
+            app.MapMetrics();
             await app.RunAsync();
         }
         catch (Exception ex)
