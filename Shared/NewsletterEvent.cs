@@ -1,6 +1,8 @@
-﻿namespace NewsletterService.Entities;
+﻿using Shared;
 
-public class NewsletterEvent
+namespace NewsletterService.Entities;
+
+public class NewsletterEvent : Event
 {
     public Guid ArticleId { get; set; }
     

@@ -1,5 +1,7 @@
 using ArticleQueue.Extensions;
 using Microsoft.AspNetCore.Builder;
+using MonitorService;
+using OpenTelemetry.Trace;
 
 namespace PublisherService;
 
@@ -33,6 +35,10 @@ public class Program
 
     private static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
+        services.AddOpenTelemetry().Setup();
+        services.AddSingleton(TracerProvider.Default.GetTracer(Monitoring.ActivitySource.Name));
+
+        
         services.AddControllers();
         services.AddOpenApi();
 
