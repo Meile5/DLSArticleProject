@@ -8,8 +8,6 @@ public class MessageClient(IMessageAdapter adapter) : IMessageClient
 {
     public async Task Subscribe<T>(string subscriptionId, MessageHandler<T>? handler = null, CancellationToken token = default)
     {
-        
-        
         using var activity = Monitoring.ActivitySource.StartActivity("Subscribe (type: "+ typeof(T).FullName +") called in MessageClient");
         
         await adapter.Subscribe(subscriptionId, handler == null ? handler : null, token );
