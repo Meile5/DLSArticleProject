@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using Prometheus;
 using StackExchange.Redis;
 
 namespace CommentService.Service;
@@ -39,9 +40,19 @@ public class CacheService
     public async Task<T?> GetAsync<T>(string key)
     {
         var value = await _db.StringGetAsync(key);
-        if (value.IsNullOrEmpty) return default;
+        if (value.IsNullOrEmpty)
+        {
+            CacheMisses.Inc();
+            return default;
+        }
         await UpdateLRUAsync(key);
+        CacheHits.Inc();
         return JsonSerializer.Deserialize<T>(value!.ToString());
     }
+    
+    private static readonly Counter CacheHits = Metrics
+        .CreateCounter("commentcache_hits_total", "Total number of comment cache hits");                                                                                                                                
+    private static readonly Counter CacheMisses = Metrics
+        .CreateCounter("commentcache_misses_total", "Total number of comment cache misses");
     
 }
