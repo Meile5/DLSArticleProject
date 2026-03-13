@@ -61,18 +61,19 @@ public class CommentsService(CommentsRepo commentsRepo, IProfanityClient profani
         
         Log.Logger.Debug("Entered GetComments in CommentsService");
         
-        var commentList = await cacheService.GetAsync<List<Comment>>(articleDto.ArticleId);
+        var commentList = await cacheService.GetAsync<List<CommentResponseDto>>(articleDto.ArticleId);
+
         var commentsListDto = new CommentsListDto();
 
         if (commentList != null)
         {
-            commentsListDto.Comments = commentList.Select(c => CommentsListDto.FromEntity(c)).ToList();
+            commentsListDto.Comments = commentList;
             return commentsListDto;
         }
         
         var comments = await commentsRepo.GetComments(articleDto.ArticleId);
         commentsListDto.Comments = comments.Select(c => CommentsListDto.FromEntity(c)).ToList();
-        await cacheService.SetAsync(articleDto.ArticleId, comments);
+        await cacheService.SetAsync(articleDto.ArticleId, commentsListDto.Comments);
 
         return commentsListDto;
         
