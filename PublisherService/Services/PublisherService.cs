@@ -14,7 +14,7 @@ public class PublisherService(IMessageClient _client)
     {
         using var activity = Monitoring.ActivitySource.StartActivity("PublishArticleAsync called in PublisherService");
 
-        var articlePublished = new ArticlePublishedEvent
+        ArticlePublishedEvent articlePublished = new ArticlePublishedEvent
         {
             ArticleId = Guid.NewGuid(),
             Title = request.Title,
@@ -23,7 +23,7 @@ public class PublisherService(IMessageClient _client)
             PublishedAt = DateTime.UtcNow
         };
         
-        //inject context before publishing event (for tracing)
+        //inject context before publishing event (for distributed tracing, so handlers that recieve this can get the context)
         var activityContext = activity?.Context ?? Activity.Current?.Context ?? default;
         var propagationContext = new PropagationContext(activityContext, Baggage.Current);
         var propagator = new TraceContextPropagator();
