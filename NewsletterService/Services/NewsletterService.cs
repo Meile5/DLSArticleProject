@@ -13,7 +13,7 @@ public class NewsletterService(IMessageClient _client)
     public async Task NewsletterAsync(ArticlePublishedEvent request, PropagationContext parentContext, Baggage baggage)
     {
         
-        using var activity = Monitoring.ActivitySource.StartActivity("Entered HandleAsync in NewsletterHandler");
+        using var activity = Monitoring.ActivitySource.StartActivity("Entered NewsletterAsync in NewsletterService", ActivityKind.Consumer, parentContext.ActivityContext);
 
         var finalEvent = new NewsletterEvent
         {
