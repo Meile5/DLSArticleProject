@@ -1,6 +1,8 @@
+using Shared;
+
 namespace ArticleQueue.Models.Events;
 
-public class LatestNewsEvent
+public class LatestNewsEvent : Event
 {
     public Guid ArticleId { get; set; }
     public string Title { get; set; }
