@@ -9,10 +9,11 @@ namespace ArticleService.Controllers;
 public class ArticlesController : ControllerBase
 {
     private readonly IArticleService _service;
-
-    public ArticlesController(IArticleService service)
+    private readonly ArticleCacheService _cacheService;
+    public ArticlesController(IArticleService service, ArticleCacheService articleCacheService)
     {
         _service = service;
+        _cacheService = articleCacheService;
     }
 
     [HttpPost]
@@ -58,5 +59,12 @@ public class ArticlesController : ControllerBase
         if (!deleted)
             return NotFound();
         return NoContent();
+    }
+    
+    [HttpGet("recent")]
+    public IActionResult GetRecentArticles()
+    {
+        var articles = _cacheService.GetArticles();
+        return Ok(articles);
     }
 }
