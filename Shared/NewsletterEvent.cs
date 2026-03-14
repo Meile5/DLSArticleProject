@@ -1,6 +1,5 @@
-﻿using Shared;
-
-namespace NewsletterService.Entities;
+﻿
+namespace Shared;
 
 public class NewsletterEvent : Event
 {
@@ -10,7 +9,7 @@ public class NewsletterEvent : Event
     
     public string Content { get; set; }
     
-    public Guid AuthorId { get; set; }
+    public string AuthorName { get; set; }
     
     public DateTime PublishedAt { get; set; }
 }

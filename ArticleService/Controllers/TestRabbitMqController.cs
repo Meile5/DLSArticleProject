@@ -1,3 +1,5 @@
+using ArticleQueue.Interfaces;
+using ArticleQueue.Models.Events;
 using ArticleService.Services;
 using Microsoft.AspNetCore.Mvc;
 using Shared;
@@ -21,12 +23,12 @@ public class TestRabbitMqController : ControllerBase
         var evt = new ArticlePublishedEvent
         {
             Title = "Test Article via Controller",
-            Contents = "This is a test article from temporary controller",
-            PublishingDate = DateTime.UtcNow,
-            AuthorName = "Nil Tester"
+            Content = "This is a test article from temporary controller",
+            PublishedAt = DateTime.UtcNow,
+            AuthorName = "Tester"
         };
 
-        await _messageClient.PublishAsync(evt);
+        await _messageClient.Publish(evt);
         return Ok("Published test article!");
     }
 }

@@ -19,7 +19,7 @@ public class PublisherService(IMessageClient _client)
             ArticleId = Guid.NewGuid(),
             Title = request.Title,
             Content = request.Content,
-            AuthorId = request.AuthorId,
+            AuthorName = request.AuthorName,
             PublishedAt = DateTime.UtcNow
         };
         

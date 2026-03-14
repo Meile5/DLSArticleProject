@@ -1,0 +1,73 @@
+using ArticleQueue.Interfaces;
+using ArticleQueue.Models;
+using ArticleQueue.Models.Events;
+using ArticleService.Dtos;
+using ArticleService.Services;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+
+namespace ArticleService.BackgroundServices;
+
+public class ArticleSubscriber : BackgroundService
+{
+    private readonly IMessageClient _messageClient;
+    private readonly IServiceProvider _serviceProvider; 
+    private readonly ILogger<ArticleSubscriber> _logger;
+    private const string SubscriptionId = "ArticleServiceSubscriber";
+
+    public ArticleSubscriber(
+        IMessageClient messageClient,
+        IServiceProvider serviceProvider, 
+        ILogger<ArticleSubscriber> logger)
+    {
+        _messageClient = messageClient;
+        _serviceProvider = serviceProvider;
+        _logger = logger;
+    }
+
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        await _messageClient.Subscribe(
+            SubscriptionId,
+            new MessageHandler<ArticlePublishedEvent>(evt =>
+            {
+                _ = HandleEventAsync(evt, stoppingToken);
+            }),
+            stoppingToken
+        );
+
+        while (!stoppingToken.IsCancellationRequested)
+        {
+            await Task.Delay(1000, stoppingToken);
+        }
+    }
+
+    private async Task HandleEventAsync(ArticlePublishedEvent evt, CancellationToken stoppingToken)
+    {
+        if (stoppingToken.IsCancellationRequested)
+            return;
+
+        try
+        {
+            using var scope = _serviceProvider.CreateScope();
+            var articleService = scope.ServiceProvider.GetRequiredService<IArticleService>();
+
+            var dto = new ArticleCreateDto
+            {
+                Title = evt.Title,
+                Contents = evt.Content,
+                PublishingDate = evt.PublishedAt,
+                AuthorName = evt.AuthorName
+            };
+
+            await articleService.CreateArticleAsync(dto);
+            _logger.LogInformation("Article saved from event: {Title}", evt.Title);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error saving article from event: {Title}", evt.Title);
+        }
+    }
+
+}
