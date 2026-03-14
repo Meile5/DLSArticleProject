@@ -13,15 +13,18 @@ public class Program
         {
             var builder = WebApplication.CreateBuilder();
             ConfigureServices(builder.Services, builder.Configuration);
+            
+            builder.Services.AddSwaggerGen();
+
             var app = builder.Build();
+            
+            
 
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
-                app.UseSwaggerUi(options =>
-                {
-                    options.DocumentPath = "/openapi/v1.json";
-                });
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
             app.MapControllers();

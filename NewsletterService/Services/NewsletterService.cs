@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics;
 using ArticleQueue.Interfaces;
-using ArticleQueue.Models.Events;
 using MonitorService;
-using NewsletterService.Entities;
 using OpenTelemetry;
 using OpenTelemetry.Context.Propagation;
+using Shared;
+using ArticlePublishedEvent = ArticleQueue.Models.Events.ArticlePublishedEvent;
 
 namespace NewsletterService.Services;
 
@@ -15,12 +15,12 @@ public class NewsletterService(IMessageClient _client)
         
         using var activity = Monitoring.ActivitySource.StartActivity("Entered NewsletterAsync in NewsletterService", ActivityKind.Consumer, parentContext.ActivityContext);
 
-        var finalEvent = new NewsletterEvent
+        var finalEvent = new ArticlePublishedEvent()
         {
             ArticleId = request.ArticleId,
             Title = request.Title,
             Content = request.Content,
-            AuthorId = request.AuthorId,
+            AuthorName = request.AuthorName,
             PublishedAt = request.PublishedAt
         };
         
