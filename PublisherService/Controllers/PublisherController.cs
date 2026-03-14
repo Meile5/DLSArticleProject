@@ -1,5 +1,7 @@
 ﻿using PublisherService.Entities;
 using Microsoft.AspNetCore.Mvc;
+using MonitorService;
+
 namespace PublisherService.Controllers;
 
 
@@ -10,6 +12,8 @@ public class PublisherController(Services.PublisherService _service) : Controlle
     [HttpPost]
     public async Task<IActionResult> Publish(PublishArticleRequest request)
     {
+        using var activity = Monitoring.ActivitySource.StartActivity("Publish method called in PublisherController (POST request)");
+        
         await _service.PublishArticleAsync(request);
         return Ok();
     }
