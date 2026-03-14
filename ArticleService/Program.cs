@@ -36,6 +36,10 @@ builder.Services.AddDbContext<ArticleDbContext>(options =>
 builder.Services.AddScoped<IArticleRepository, ArticleDatabase>();
 builder.Services.AddScoped<IArticleService, ArticleService.Services.ArticleService>();
 
+builder.Services.AddMemoryCache();
+builder.Services.AddSingleton<ArticleCacheService>();
+builder.Services.AddHostedService<ArticleCacheBackgroundService>();
+
 var options = builder.Services.MessageClientOptions(builder.Configuration);
  
 builder.Services.AddRabbitMqMessageClient(options);
