@@ -96,13 +96,13 @@ services:
 #      - mssql-continent-7:/var/opt/mssql
 
   # --- ARTICLE SERVICE INSTANCES (X-axis) ---
-  article-service-1:
-    build: .
-    ports:
-      - "5001:8080"
-    depends_on:
-      - article-db-global
-      - article-queue
+#  article-service-1:
+#    build: .
+#    ports:
+#      - "5001:8080"
+#    depends_on:
+#      - article-db-global
+#      - article-queue
      # - article-db-continent-1
      # - article-db-continent-2
      # - article-db-continent-3
