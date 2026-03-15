@@ -1,3 +1,5 @@
+using Prometheus;
+
 namespace ArticleService.Services;
 
 using Entities;
@@ -19,7 +21,18 @@ public class ArticleCacheService
     }
 
     public IEnumerable<Article> GetArticles()
-    {
-        return _cache.Get<IEnumerable<Article>>(CacheKey) ?? Enumerable.Empty<Article>();
+    { 
+        var articles = _cache.Get<IEnumerable<Article>>(CacheKey);
+        if (articles == null)
+        {
+            CacheMisses.Inc(); return Enumerable.Empty<Article>();
+        } 
+        CacheHits.Inc();                                                                                                                                  
+        return articles;
     }
+    
+    private static readonly Counter CacheHits = Metrics
+        .CreateCounter("articlecache_hits_total", "Total number of article cache hits");                                                                                                                                
+    private static readonly Counter CacheMisses = Metrics
+        .CreateCounter("articlecache_misses_total", "Total number of article cache misses");
 }
