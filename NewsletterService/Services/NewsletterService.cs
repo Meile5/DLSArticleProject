@@ -3,6 +3,7 @@ using ArticleQueue.Interfaces;
 using MonitorService;
 using OpenTelemetry;
 using OpenTelemetry.Context.Propagation;
+using Serilog;
 using Shared;
 using ArticlePublishedEvent = ArticleQueue.Models.Events.ArticlePublishedEvent;
 
@@ -12,8 +13,11 @@ public class NewsletterService(IMessageClient _client)
 {
     public async Task NewsletterAsync(ArticlePublishedEvent request, PropagationContext parentContext, Baggage baggage)
     {
-        
+        //opentelemetry activity start
         using var activity = Monitoring.ActivitySource.StartActivity("Entered NewsletterAsync in NewsletterService", ActivityKind.Consumer, parentContext.ActivityContext);
+        
+        //serilog logging
+        Log.Logger.Debug("Entered HandleAsync in NewsletterHandler");
 
         var finalEvent = new ArticlePublishedEvent()
         {
