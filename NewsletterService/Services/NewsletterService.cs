@@ -19,7 +19,7 @@ public class NewsletterService(IMessageClient _client)
         //serilog logging
         Log.Logger.Debug("Entered HandleAsync in NewsletterHandler");
 
-        var finalEvent = new ArticlePublishedEvent()
+        var finalEvent = new NewsletterEvent()
         {
             ArticleId = request.ArticleId,
             Title = request.Title,
