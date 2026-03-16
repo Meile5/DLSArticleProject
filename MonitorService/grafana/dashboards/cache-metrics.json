@@ -7,10 +7,17 @@
   "time": { "from": "now-15m", "to": "now" },
   "panels": [
     {
+      "id": 100,
+      "title": "Comment Cache",
+      "type": "row",
+      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 1 },
+      "collapsed": false
+    },
+    {
       "id": 1,
       "title": "Cache Hit Ratio %",
       "type": "stat",
-      "gridPos": { "x": 0, "y": 0, "w": 8, "h": 4 },
+      "gridPos": { "x": 0, "y": 1, "w": 8, "h": 4 },
       "options": {
         "reduceOptions": { "calcs": ["lastNotNull"] },
         "orientation": "auto",
@@ -45,7 +52,7 @@
       "id": 2,
       "title": "Total Cache Hits",
       "type": "stat",
-      "gridPos": { "x": 8, "y": 0, "w": 8, "h": 4 },
+      "gridPos": { "x": 8, "y": 1, "w": 8, "h": 4 },
       "options": {
         "reduceOptions": { "calcs": ["lastNotNull"] },
         "colorMode": "background",
@@ -69,7 +76,7 @@
       "id": 3,
       "title": "Total Cache Misses",
       "type": "stat",
-      "gridPos": { "x": 16, "y": 0, "w": 8, "h": 4 },
+      "gridPos": { "x": 16, "y": 1, "w": 8, "h": 4 },
       "options": {
         "reduceOptions": { "calcs": ["lastNotNull"] },
         "colorMode": "background",
@@ -93,7 +100,7 @@
       "id": 4,
       "title": "Hits vs Misses over Time",
       "type": "timeseries",
-      "gridPos": { "x": 0, "y": 4, "w": 24, "h": 8 },
+      "gridPos": { "x": 0, "y": 5, "w": 24, "h": 8 },
       "options": {
         "legend": { "displayMode": "list", "placement": "bottom" }
       },
@@ -127,7 +134,7 @@
       "id": 5,
       "title": "Hit Ratio over Time",
       "type": "timeseries",
-      "gridPos": { "x": 0, "y": 12, "w": 24, "h": 8 },
+      "gridPos": { "x": 0, "y": 13, "w": 24, "h": 8 },
       "options": {
         "legend": { "displayMode": "list", "placement": "bottom" }
       },
@@ -149,6 +156,161 @@
       "targets": [
         {
           "expr": "rate(commentcache_hits_total[1m]) / (rate(commentcache_hits_total[1m]) + rate(commentcache_misses_total[1m])) * 100",
+          "legendFormat": "Hit Ratio %",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 101,
+      "title": "Article Cache",
+      "type": "row",
+      "gridPos": { "x": 0, "y": 21, "w": 24, "h": 1 },
+      "collapsed": false
+    },
+    {
+      "id": 6,
+      "title": "Cache Hit Ratio %",
+      "type": "stat",
+      "gridPos": { "x": 0, "y": 22, "w": 8, "h": 4 },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "orientation": "auto",
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "auto"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "yellow", "value": 50 },
+              { "color": "green", "value": 80 }
+            ]
+          }
+        }
+      },
+      "targets": [
+        {
+          "expr": "rate(articlecache_hits_total[5m]) / (rate(articlecache_hits_total[5m]) + rate(articlecache_misses_total[5m])) * 100",
+          "legendFormat": "Hit Ratio",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Total Cache Hits",
+      "type": "stat",
+      "gridPos": { "x": 8, "y": 22, "w": 8, "h": 4 },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "colorMode": "background",
+        "graphMode": "none"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": { "mode": "fixed", "fixedColor": "green" }
+        }
+      },
+      "targets": [
+        {
+          "expr": "articlecache_hits_total",
+          "legendFormat": "Hits",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Total Cache Misses",
+      "type": "stat",
+      "gridPos": { "x": 16, "y": 22, "w": 8, "h": 4 },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "colorMode": "background",
+        "graphMode": "none"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": { "mode": "fixed", "fixedColor": "red" }
+        }
+      },
+      "targets": [
+        {
+          "expr": "articlecache_misses_total",
+          "legendFormat": "Misses",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "Hits vs Misses over Time",
+      "type": "timeseries",
+      "gridPos": { "x": 0, "y": 26, "w": 24, "h": 8 },
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom" }
+      },
+      "fieldConfig": {
+        "defaults": { "unit": "reqps" },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Hits" },
+            "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "green" } }]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Misses" },
+            "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } }]
+          }
+        ]
+      },
+      "targets": [
+        {
+          "expr": "rate(articlecache_hits_total[1m])",
+          "legendFormat": "Hits",
+          "refId": "A"
+        },
+        {
+          "expr": "rate(articlecache_misses_total[1m])",
+          "legendFormat": "Misses",
+          "refId": "B"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "Hit Ratio over Time",
+      "type": "timeseries",
+      "gridPos": { "x": 0, "y": 34, "w": 24, "h": 8 },
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom" }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "yellow", "value": 50 },
+              { "color": "green", "value": 80 }
+            ]
+          }
+        }
+      },
+      "targets": [
+        {
+          "expr": "rate(articlecache_hits_total[1m]) / (rate(articlecache_hits_total[1m]) + rate(articlecache_misses_total[1m])) * 100",
           "legendFormat": "Hit Ratio %",
           "refId": "A"
         }
