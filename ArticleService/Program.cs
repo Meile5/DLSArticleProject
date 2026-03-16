@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,6 +61,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.UseCors("DevelopmentCorsPolicy");
+
+// Add Prometheus metrics endpoint
+app.MapMetrics();
 
 app.MapControllers();
 
