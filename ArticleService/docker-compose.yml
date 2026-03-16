@@ -25,7 +25,7 @@ services:
     volumes:
       - mssql-global:/var/opt/mssql
 
- #rticle-db-continent-1:
+ #article-db-continent-1:
  # image: mcr.microsoft.com/mssql/server:latest
  # environment:
  #   MSSQL_SA_PASSWORD: "SuperSecret7!"

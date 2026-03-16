@@ -5,6 +5,7 @@ using MonitorService;
 using OpenTelemetry;
 using OpenTelemetry.Context.Propagation;
 using PublisherService.Entities;
+using Serilog;
 
 namespace PublisherService.Services;
 
@@ -14,6 +15,9 @@ public class PublisherService(IMessageClient _client)
     {
         using var activity = Monitoring.ActivitySource.StartActivity("PublishArticleAsync called in PublisherService");
 
+        Log.Logger.Debug("PublishArticleAsync called in PublisherService");
+
+        
         ArticlePublishedEvent articlePublished = new ArticlePublishedEvent
         {
             ArticleId = Guid.NewGuid(),
