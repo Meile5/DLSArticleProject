@@ -46,52 +46,52 @@ jobs:
       - name: Build and Push Docker image (Article-Service)
         run: |
           docker build \
-            -t ghcr.io/${{ github.repository_owner }}/article-service:${{ needs.integration.outputs.semver }} \
+            -t ghcr.io/meile5/article-service:${{ needs.integration.outputs.semver }} \
             -f ArticleService/Dockerfile \
             .
-          docker push ghcr.io/${{ github.repository_owner }}/article-service --all-tags
+          docker push ghcr.io/meile5/article-service --all-tags
 
       # Build the Docker image
       - name: Build and Push Docker image (Comment-Service)
         run: |
           docker build \
-            -t ghcr.io/${{ github.repository_owner }}/comment-service:${{ needs.integration.outputs.semver }} \
+            -t ghcr.io/meile5/comment-service:${{ needs.integration.outputs.semver }} \
             -f CommentService/Dockerfile \
             .
-          docker push ghcr.io/${{ github.repository_owner }}/comment-service --all-tags
+          docker push ghcr.io/meile5/comment-service --all-tags
           
       # Build the Docker image
       - name: Build and Push Docker image (Draft-Service)
         run: |
           docker build \
-            -t ghcr.io/${{ github.repository_owner }}/draft-service:${{ needs.integration.outputs.semver }} \
+            -t ghcr.io/meile5/draft-service:${{ needs.integration.outputs.semver }} \
             -f DraftService/Dockerfile \
             .
-          docker push ghcr.io/${{ github.repository_owner }}/draft-service --all-tags
+          docker push ghcr.io/meile5/draft-service --all-tags
           
       # Build the Docker image
       - name: Build and Push Docker image (Newsletter-Service)
         run: |
           docker build \
-            -t ghcr.io/${{ github.repository_owner }}/newsletter-service:${{ needs.integration.outputs.semver }} \
+            -t ghcr.io/meile5/newsletter-service:${{ needs.integration.outputs.semver }} \
             -f NewsletterService/Dockerfile \
             .
-          docker push ghcr.io/${{ github.repository_owner }}/newsletter-service --all-tags
+          docker push ghcr.io/meile5/newsletter-service --all-tags
           
       # Build the Docker image
       - name: Build and Push Docker image (Profanity-Service)
         run: |
           docker build \
-            -t ghcr.io/${{ github.repository_owner }}/profanity-service:${{ needs.integration.outputs.semver }} \
+            -t ghcr.io/meile5/profanity-service:${{ needs.integration.outputs.semver }} \
             -f ProfanityService/Dockerfile \
             .
-          docker push ghcr.io/${{ github.repository_owner }}/profanity-service --all-tags
+          docker push ghcr.io/meile5/profanity-service --all-tags
           
       # Build the Docker image
       - name: Build and Push Docker image (Publisher-Service)
         run: |
           docker build \
-            -t ghcr.io/${{ github.repository_owner }}/publisher-service:${{ needs.integration.outputs.semver }} \
+            -t ghcr.io/meile5/publisher-service:${{ needs.integration.outputs.semver }} \
             -f PublisherService/Dockerfile \
             .
-          docker push ghcr.io/${{ github.repository_owner }}/publisher-service --all-tags
+          docker push ghcr.io/meile5/publisher-service --all-tags
