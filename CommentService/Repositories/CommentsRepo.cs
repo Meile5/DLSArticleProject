@@ -10,7 +10,7 @@ public class CommentsRepo(AppDbContext dbContext)
 {
     public async Task SaveComment(Comment comment, string userId)
     {
-        string shortenedComment = comment.Text.Substring(0, 15); //purely used for monitoring
+        string shortenedComment = comment.Text.Length > 15 ? comment.Text.Substring(0, 15) : comment.Text; //purely used for monitoring
         using var activity = Monitoring.ActivitySource.StartActivity("Entered SaveComment in CommentsRepo with user "+ userId + " & Comment " + shortenedComment);
         
         Log.Logger.Debug("Entered SaveComment in CommentsRepo with user {userId} & Comment {comment}", userId, shortenedComment);

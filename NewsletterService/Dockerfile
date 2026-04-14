@@ -7,20 +7,20 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["ArticleService/ArticleService.csproj", "ArticleService/"]
-COPY ["Shared/Shared.csproj", "Shared/"]
+COPY ["NewsletterService/NewsletterService.csproj", "NewsletterService/"]
 COPY ["ArticleQueue/ArticleQueue.csproj", "ArticleQueue/"]
 COPY ["MonitorService/MonitorService.csproj", "MonitorService/"]
-RUN dotnet restore "ArticleService/ArticleService.csproj"
+COPY ["Shared/Shared.csproj", "Shared/"]
+RUN dotnet restore "NewsletterService/NewsletterService.csproj"
 COPY . .
-WORKDIR "/src/ArticleService"
-RUN dotnet build "./ArticleService.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/NewsletterService"
+RUN dotnet build "./NewsletterService.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./ArticleService.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./NewsletterService.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "ArticleService.dll"]
+ENTRYPOINT ["dotnet", "NewsletterService.dll"]

@@ -14,12 +14,6 @@ public class ProfanityClient(HttpClient httpClient) : IProfanityClient
             onBreak: (ex, duration) => Console.WriteLine("Circuit OPENED - profanity service is down"),
             onReset: () => Console.WriteLine("Circuit CLOSED - profanity service is back")
         );
-
-    // Note:
-    // When I was testing to create a comment with the profanity service down, i got:
-    // System.Net.Http.HttpRequestException: Response status code does not indicate success: 403 (Forbidden).
-    // I think it's throwing because of: response.EnsureSuccessStatusCode();
-    // Need to check this
     
     public async Task<bool> FilterComment(string text)
     {
@@ -30,7 +24,7 @@ public class ProfanityClient(HttpClient httpClient) : IProfanityClient
                 var response = await httpClient.PostAsJsonAsync("/profanity", new ProfanityCommentDto { Comment = text });
             
                 if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
-                    return true; // contains profanity
+                    return true; 
             
                 response.EnsureSuccessStatusCode();
                 return await response.Content.ReadFromJsonAsync<bool>();
@@ -38,7 +32,7 @@ public class ProfanityClient(HttpClient httpClient) : IProfanityClient
         }
         catch (BrokenCircuitException)
         {
-            return false;
+            throw new Exception("Comment service temporarily unavailable");
         }
     }
 }

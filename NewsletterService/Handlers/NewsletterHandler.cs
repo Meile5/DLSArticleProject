@@ -4,6 +4,7 @@ using ArticleQueue.Models.Events;
 using MonitorService;
 using OpenTelemetry;
 using OpenTelemetry.Context.Propagation;
+using Serilog;
 
 namespace NewsletterService.Handlers;
 
@@ -19,6 +20,10 @@ public class NewsletterHandler(Services.NewsletterService service): IMessageHand
         });
         Baggage.Current = parentContext.Baggage;
         using var activity = Monitoring.ActivitySource.StartActivity("Entered HandleAsync in NewsletterHandler", ActivityKind.Consumer, parentContext.ActivityContext);
+        
+        //serilog logging
+        Log.Logger.Debug("Entered HandleAsync in NewsletterHandler");
+
         
         //last two things here are for tracing
         await service.NewsletterAsync(message, parentContext, Baggage.Current);
