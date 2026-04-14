@@ -22,7 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PublisherService", "Publish
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsletterService", "NewsletterService\NewsletterService.csproj", "{465EE9C2-8002-46BF-890E-1C30AF578BEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubscriberService", "SubscriberService\SubscriberService.csproj", "{44C5231E-A7A4-4AE5-B894-7D1423446108}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubscriberService", "SubscriberService\SubscriberService.csproj", "{50E09CAA-FA67-4517-BF5F-69D0695073A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,9 +70,9 @@ Global
 		{465EE9C2-8002-46BF-890E-1C30AF578BEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{465EE9C2-8002-46BF-890E-1C30AF578BEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{465EE9C2-8002-46BF-890E-1C30AF578BEC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{44C5231E-A7A4-4AE5-B894-7D1423446108}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{44C5231E-A7A4-4AE5-B894-7D1423446108}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{44C5231E-A7A4-4AE5-B894-7D1423446108}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{44C5231E-A7A4-4AE5-B894-7D1423446108}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50E09CAA-FA67-4517-BF5F-69D0695073A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50E09CAA-FA67-4517-BF5F-69D0695073A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50E09CAA-FA67-4517-BF5F-69D0695073A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50E09CAA-FA67-4517-BF5F-69D0695073A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
