@@ -56,7 +56,7 @@ public class NewsletterService(IMessageClient _client)
         //inject context before publishing finished event (for distributed tracing, so handlers that recieve this can get the context)
         var propagationContext = new PropagationContext(parentContext.ActivityContext, baggage);
         var propagator = new TraceContextPropagator();
-        propagator.Inject(propagationContext, finalEvent,(bRequest, key, value) => bRequest.Header.Add(key, value) );
+        propagator.Inject(propagationContext, welcomeMailEvent,(bRequest, key, value) => bRequest.Header.Add(key, value) );
 
         
         await _client.Publish(welcomeMailEvent);
