@@ -11,7 +11,6 @@ public class MessageClient(IMessageAdapter adapter) : IMessageClient
     {
         //using var activity = Monitoring.ActivitySource.StartActivity("Subscribe (type: "+ typeof(T).FullName +") called in MessageClient");
         
-        
         await adapter.Subscribe(subscriptionId, handler, token );
     }
 

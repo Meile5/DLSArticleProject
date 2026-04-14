@@ -24,7 +24,6 @@ public static class Monitoring
         var version = "1.0.0";
         
         //OpenTelemetry (otl) Setup (Tracing)
-        //this code is still needed, zipkin/otl doesn't Work Without it
         TracerProvider = Sdk.CreateTracerProviderBuilder()
             .AddAspNetCoreInstrumentation()
             .AddZipkinExporter()
