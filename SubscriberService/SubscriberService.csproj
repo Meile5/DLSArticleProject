@@ -14,8 +14,4 @@
       <ProjectReference Include="..\ArticleService\ArticleService.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Messaging\" />
-    </ItemGroup>
-
 </Project>
