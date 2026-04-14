@@ -2,6 +2,7 @@ using ArticleQueue.Extensions;
 using ArticleQueue.Models.Events;
 using MonitorService;
 using OpenTelemetry.Trace;
+using Shared;
 using SubscriberQueue.Events;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +18,7 @@ builder.Services.AddSingleton(TracerProvider.Default.GetTracer(Monitoring.Activi
 builder.Services.AddRabbitMqMessageClient(options);
 builder.Services.AddMessagingHandlers(typeof(Program).Assembly);
 builder.Services.AddSubscription<ArticlePublishedEvent>("article-newsletter");
-builder.Services.AddSubscription<NewSubscriberEvent>("new-subscriber");
+builder.Services.AddSubscription<NewSubscriberSuccessEvent>("new-subscriber");
 builder.Services.AddScoped<NewsletterService.Services.NewsletterService>(); 
 
 var app = builder.Build();

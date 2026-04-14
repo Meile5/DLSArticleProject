@@ -23,7 +23,7 @@ public class WelcomeMailHandler(Services.NewsletterService service) : IMessageHa
         using var activity = Monitoring.ActivitySource.StartActivity("Entered HandleAsync in WelcomeMailHandler", ActivityKind.Consumer, parentContext.ActivityContext);
         
         //serilog logging
-        Log.Logger.Debug("Entered HandleAsync in NewsletterHandler");
+        Log.Logger.Debug("Entered HandleAsync in WelcomeMailHandler");
         
         
         await service.SendWelcomeMail(message, parentContext, Baggage.Current);
