@@ -110,7 +110,7 @@ public class ArticleDatabase : IArticleRepository
         await using var cmd = conn.CreateCommand();
 
         cmd.CommandText = "DELETE FROM Articles WHERE ArticleId = @ArticleId";
-        cmd.Parameters.AddWithValue("@ArticleName", articleId);
+        cmd.Parameters.AddWithValue("@ArticleId", articleId);
 
         await cmd.ExecuteNonQueryAsync();
     }
