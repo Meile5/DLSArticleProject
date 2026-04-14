@@ -43,7 +43,7 @@ public class NewsletterService(IMessageClient _client)
         using var activity = Monitoring.ActivitySource.StartActivity("Entered SendWelcomeMail in NewsletterService", ActivityKind.Consumer, parentContext.ActivityContext);
         
         //serilog logging
-        Log.Logger.Debug("Entered HandleAsync in NewsletterHandler");
+        Log.Logger.Debug("Entered SendWelcomeMail in NewsletterService");
         
         WelcomeMailEvent welcomeMailEvent = new WelcomeMailEvent
         {
