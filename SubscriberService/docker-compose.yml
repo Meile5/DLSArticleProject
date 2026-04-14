@@ -1,0 +1,14 @@
+services:
+  subscriber-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - SA_PASSWORD=Subscriber_345
+      - ACCEPT_EULA=Y
+    ports:
+      - "1635:1433"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
