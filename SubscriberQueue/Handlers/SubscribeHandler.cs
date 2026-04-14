@@ -1,12 +1,13 @@
 using ArticleQueue.Interfaces;
+using Shared;
 using SubscriberQueue.Events;
 using SubscriberQueue.Models;
 
 namespace SubscriberQueue.Handlers;
 
-public class SubscribeHandler(SubscriberList subscribeList) : IMessageHandler<NewSubscriberEvent>
+public class SubscribeHandler(SubscriberList subscribeList, IMessageClient client) : IMessageHandler<NewSubscriberEvent>
 {
-    public Task HandleAsync(NewSubscriberEvent message, CancellationToken ct)
+    public async Task HandleAsync(NewSubscriberEvent message, CancellationToken ct)
     {
         Subscriber newSub = new Subscriber
         {
@@ -16,6 +17,9 @@ public class SubscribeHandler(SubscriberList subscribeList) : IMessageHandler<Ne
             isActive = true
         };
         subscribeList.Subscribe(newSub);
-        return Task.CompletedTask;
+
+        NewSubscriberSuccessEvent successEvent = NewSubscriberSuccessEvent.FromSubscriberEvent(message);
+
+        await client.Publish(successEvent);
     }
 }
