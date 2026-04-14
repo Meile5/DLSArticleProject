@@ -1,18 +1,18 @@
 using ArticleQueue.Interfaces;
 using Shared;
+using Shared.Events;
 using SubscriberQueue.Events;
 using SubscriberQueue.Models;
 
 namespace SubscriberQueue.Handlers;
 
-public class SubscribeHandler(SubscriberList subscribeList, IMessageClient client) : IMessageHandler<NewSubscriberEvent>
+public class SubscribeHandler(SubscriberList subscribeList, IMessageClient client) : IMessageHandler<SubscriberCreatedEvent>
 {
-    public async Task HandleAsync(NewSubscriberEvent message, CancellationToken ct)
+    public async Task HandleAsync(SubscriberCreatedEvent message, CancellationToken ct)
     {
         Subscriber newSub = new Subscriber
         {
             SubscriberId = message.SubscriberId,
-            Username = message.Username,
             Email = message.Email,
             isActive = true
         };

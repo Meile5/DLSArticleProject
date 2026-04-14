@@ -3,7 +3,6 @@ namespace SubscriberQueue.Models;
 public class Subscriber
 {
     public Guid SubscriberId { get; set; }
-    public string Username { get; set; }
     public string Email { get; set; }
     public bool isActive { get; set; }
 
