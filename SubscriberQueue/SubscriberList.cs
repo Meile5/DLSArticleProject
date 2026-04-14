@@ -15,13 +15,14 @@ public class SubscriberList
     public void Subscribe(Subscriber sub)
     {
         bool doesIdExist = _subscriberList.Where(s => s.SubscriberId == sub.SubscriberId).FirstOrDefault() != null;
-        if (!doesIdExist)
+        bool doesEmailExist = _subscriberList.Where(s => s.Email == sub.Email).FirstOrDefault() != null;
+        if (!doesIdExist && !doesEmailExist)
         {
             _subscriberList.Add(sub);
         }
         else
         {
-            Console.WriteLine("subscriber with that ID already exists");
+            Console.WriteLine("subscriber with that ID or email already exists");
         }
         
     }
@@ -33,6 +34,12 @@ public class SubscriberList
         _subscriberList.Where(s => s.SubscriberId == guid)
             .ToList().ForEach(s => s.isActive = false);
         
+    }
+    
+    public void Unsubscribe(string email)
+    {
+        _subscriberList.Where(s => s.Email == email)
+            .ToList().ForEach(s => s.isActive = false);
     }
 
 }
