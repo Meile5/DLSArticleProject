@@ -1,4 +1,4 @@
-namespace SubscriberService.Events;
+namespace Shared.Events;
 
 public class SubscriberUnsubscribedEvent
 {
