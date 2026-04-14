@@ -6,7 +6,7 @@ namespace SubscriberQueue.Handlers;
 
 public class NewsletterEventHandler(SubscriberList subscribeList) : IMessageHandler<NewsletterEvent>
 {
-    public Task HandleAsync(NewsletterEvent message, CancellationToken ct)
+    public async Task HandleAsync(NewsletterEvent message, CancellationToken ct)
     {
         var subs = subscribeList.GetList();
         List<Subscriber> activeSubs = subs.Where(s => s.isActive).ToList();
@@ -16,6 +16,5 @@ public class NewsletterEventHandler(SubscriberList subscribeList) : IMessageHand
             sub.RecieveMail(message.Content);
         }
 
-        return Task.CompletedTask;
     }
 }

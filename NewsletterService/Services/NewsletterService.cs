@@ -37,7 +37,7 @@ public class NewsletterService(IMessageClient _client)
         await _client.Publish(finalEvent);
     }
 
-    public async Task SendWelcomeMail(NewSubscriberEvent subEvent, PropagationContext parentContext, Baggage baggage)
+    public async Task SendWelcomeMail(NewSubscriberSuccessEvent subEvent, PropagationContext parentContext, Baggage baggage)
     {
         //opentelemetry activity start
         using var activity = Monitoring.ActivitySource.StartActivity("Entered SendWelcomeMail in NewsletterService", ActivityKind.Consumer, parentContext.ActivityContext);

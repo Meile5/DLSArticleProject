@@ -4,13 +4,14 @@ using MonitorService;
 using OpenTelemetry;
 using OpenTelemetry.Context.Propagation;
 using Serilog;
+using Shared;
 using SubscriberQueue.Events;
 
 namespace NewsletterService.Handlers;
 
-public class WelcomeMailHandler(Services.NewsletterService service) : IMessageHandler<NewSubscriberEvent>
+public class WelcomeMailHandler(Services.NewsletterService service) : IMessageHandler<NewSubscriberSuccessEvent>
 {
-    public async Task HandleAsync(NewSubscriberEvent message, CancellationToken ct)
+    public async Task HandleAsync(NewSubscriberSuccessEvent message, CancellationToken ct)
     {
         //getting the context from event that was published (for distributed tracing)
         var propagator = new TraceContextPropagator();
