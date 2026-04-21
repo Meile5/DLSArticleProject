@@ -15,5 +15,17 @@ services:
       - "5672:5672"
       - "15672:15672"
 
+  subscriber-service:
+    build: .
+    environment:
+      - ConnectionStrings__AzureAppConfig=${AZURE_APP_CONFIG}
+    depends_on:
+      - subscriber-db
+      - rabbitmq
+    ports:
+      - "5267:8080"
+    env_file:
+      - .env
+
 volumes:
   subscriber-db-data:

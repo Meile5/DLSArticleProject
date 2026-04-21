@@ -14,12 +14,16 @@ builder.Services.AddSwaggerGen();
 var appOptions = builder.Services.AddAppOptions(builder.Configuration);
 
 // Azure App Configuration
+var azureAppConfigConnection = 
+    builder.Configuration.GetConnectionString("AzureAppConfig") 
+    ?? Environment.GetEnvironmentVariable("AZURE_APP_CONFIG");
+
 builder.Configuration.AddAzureAppConfiguration(azureOptions =>
 {
-    azureOptions.Connect(builder.Configuration.GetConnectionString("AzureAppConfig"))
+    azureOptions.Connect(azureAppConfigConnection)
         .UseFeatureFlags(flagOptions =>
         {
-            flagOptions.SetRefreshInterval(TimeSpan.FromSeconds(30)); 
+            flagOptions.SetRefreshInterval(TimeSpan.FromSeconds(30));
         });
 });
 
