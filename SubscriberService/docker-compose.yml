@@ -6,9 +6,14 @@ services:
       - ACCEPT_EULA=Y
     ports:
       - "1635:1433"
+    volumes:
+      - subscriber-db-data:/var/opt/mssql
 
   rabbitmq:
     image: rabbitmq:3-management
     ports:
       - "5672:5672"
       - "15672:15672"
+
+volumes:
+  subscriber-db-data:

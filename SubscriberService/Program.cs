@@ -3,6 +3,7 @@ using SubscriberService.AppOptionsPattern;
 using SubscriberService.Database;
 using SubscriberService.Services;
 using ArticleQueue.Extensions;
+using Microsoft.FeatureManagement;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,19 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var appOptions = builder.Services.AddAppOptions(builder.Configuration);
+
+// Azure App Configuration
+builder.Configuration.AddAzureAppConfiguration(azureOptions =>
+{
+    azureOptions.Connect(builder.Configuration.GetConnectionString("AzureAppConfig"))
+        .UseFeatureFlags(flagOptions =>
+        {
+            flagOptions.SetRefreshInterval(TimeSpan.FromSeconds(30)); 
+        });
+});
+
+builder.Services.AddAzureAppConfiguration(); 
+builder.Services.AddFeatureManagement();       
 
 builder.Services.AddScoped<ISubscriberRepository, SubscriberDatabase>();
 builder.Services.AddScoped<ISubscriberService, SubscriberService.Services.SubscriberService>();
@@ -28,6 +42,7 @@ var options = builder.Services.MessageClientOptions(builder.Configuration);
 builder.Services.AddRabbitMqMessageClient(options);
 
 var app = builder.Build();
+app.UseAzureAppConfiguration(); // add before UseHttpsRedirection
 
 app.UseSwagger();
 app.UseSwaggerUI();

@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
 var options = builder.Services.MessageClientOptions(builder.Configuration);
+
 builder.Services.AddOpenTelemetry().Setup();
 builder.Services.AddSingleton(TracerProvider.Default.GetTracer(Monitoring.ActivitySource.Name));
 
