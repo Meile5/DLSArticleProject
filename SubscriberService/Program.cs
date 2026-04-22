@@ -18,16 +18,21 @@ var azureAppConfigConnection =
     builder.Configuration.GetConnectionString("AzureAppConfig") 
     ?? Environment.GetEnvironmentVariable("AZURE_APP_CONFIG");
 
-builder.Configuration.AddAzureAppConfiguration(azureOptions =>
+if (!string.IsNullOrWhiteSpace(azureAppConfigConnection))
 {
-    azureOptions.Connect(azureAppConfigConnection)
-        .UseFeatureFlags(flagOptions =>
-        {
-            flagOptions.SetRefreshInterval(TimeSpan.FromSeconds(30));
-        });
-});
+    builder.Configuration.AddAzureAppConfiguration(azureOptions =>
+    {
+        azureOptions.Connect(azureAppConfigConnection)
+            .UseFeatureFlags(flagOptions =>
+            {
+                flagOptions.SetRefreshInterval(TimeSpan.FromSeconds(30));
+            });
+    });
+    builder.Services.AddAzureAppConfiguration(); 
+}
 
-builder.Services.AddAzureAppConfiguration(); 
+
+
 builder.Services.AddFeatureManagement();       
 
 builder.Services.AddScoped<ISubscriberRepository, SubscriberDatabase>();
