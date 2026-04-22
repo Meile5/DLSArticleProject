@@ -97,3 +97,12 @@ jobs:
             -f PublisherService/Dockerfile \
             .
           docker push ghcr.io/meile5/publisher-service --all-tags
+          
+      # Build the Docker image
+      - name: Build and Push Docker image (Subscriber-Service)
+        run: |
+          docker build \
+            -t ghcr.io/meile5/subscriber-service:${{ needs.integration.outputs.semver }} \
+            -f SubscriberService/Dockerfile \
+            .
+          docker push ghcr.io/meile5/subscriber-service --all-tags
