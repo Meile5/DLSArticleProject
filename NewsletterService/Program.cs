@@ -1,6 +1,9 @@
 using ArticleQueue.Extensions;
 using ArticleQueue.Models.Events;
 using MonitorService;
+using NewsletterService.AppOptionsPattern;
+using NewsletterService.Clients;
+using NewsletterService.Exceptions;
 using OpenTelemetry.Trace;
 using Shared;
 using SubscriberQueue.Events;
@@ -20,7 +23,17 @@ builder.Services.AddRabbitMqMessageClient(options);
 builder.Services.AddMessagingHandlers(typeof(Program).Assembly);
 builder.Services.AddSubscription<ArticlePublishedEvent>("article-newsletter");
 builder.Services.AddSubscription<NewSubscriberSuccessEvent>("new-subscriber");
-builder.Services.AddScoped<NewsletterService.Services.NewsletterService>(); 
+builder.Services.AddScoped<NewsletterService.Services.NewsletterService>();
+
+var appOptions = builder.Services.AddAppOptions(builder.Configuration);
+
+// Subscriber HTTP client wrapped with Polly resilience pipeline
+// (retry + circuit breaker configured inside SubscriberClient)
+builder.Services.AddHttpClient<ISubscriberClient, SubscriberClient>(client =>
+{
+    client.BaseAddress = new Uri(appOptions.SubscriberService.BaseUrl);
+    client.Timeout = TimeSpan.FromSeconds(appOptions.SubscriberService.TimeoutSeconds);
+});
 
 var app = builder.Build();
 

@@ -23,6 +23,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsletterService", "NewsletterService\NewsletterService.csproj", "{465EE9C2-8002-46BF-890E-1C30AF578BEC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubscriberQueue", "SubscriberQueue\SubscriberQueue.csproj", "{82B01753-34DA-4543-AA2D-945B38A6BB44}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubscriberService", "SubscriberService\SubscriberService.csproj", "{50E09CAA-FA67-4517-BF5F-69D0695073A7}"
 EndProject
 Global
@@ -75,5 +76,7 @@ Global
 		{82B01753-34DA-4543-AA2D-945B38A6BB44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82B01753-34DA-4543-AA2D-945B38A6BB44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82B01753-34DA-4543-AA2D-945B38A6BB44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50E09CAA-FA67-4517-BF5F-69D0695073A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50E09CAA-FA67-4517-BF5F-69D0695073A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal
