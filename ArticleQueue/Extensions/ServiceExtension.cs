@@ -19,6 +19,7 @@ public static class ServiceExtension
     public static IServiceCollection AddSubscription<TEvent>(
         this IServiceCollection services, string subscriptionId)
     {
+        Console.WriteLine("Hey");
         services.AddHostedService(provider =>
         {
             var serviceProvider = provider;
