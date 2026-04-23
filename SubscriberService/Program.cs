@@ -2,7 +2,7 @@ using RabbitMQ.Client;
 using SubscriberService.AppOptionsPattern;
 using SubscriberService.Database;
 using SubscriberService.Services;
-using ArticleQueue.Extensions;
+using SubscriberQueue.Extensions;
 using Microsoft.FeatureManagement;
 
 var builder = WebApplication.CreateBuilder(args);

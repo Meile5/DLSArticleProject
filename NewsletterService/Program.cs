@@ -1,14 +1,12 @@
-using ArticleQueue.Extensions;
 using MonitorService;
 using NewsletterService.AppOptionsPattern;
 using NewsletterService.Clients;
 using OpenTelemetry.Trace;
 using Shared.Events;
+using SubscriberQueue.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 var options = builder.Services.MessageClientOptions(builder.Configuration);

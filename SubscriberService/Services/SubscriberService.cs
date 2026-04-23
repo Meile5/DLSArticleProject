@@ -1,7 +1,7 @@
 using SubscriberService.Database;
 using SubscriberService.Dtos;
 using SubscriberService.Entities;
-using ArticleQueue.Interfaces;
+using SubscriberQueue.Interfaces;
 using Shared.Events;
 
 namespace SubscriberService.Services;

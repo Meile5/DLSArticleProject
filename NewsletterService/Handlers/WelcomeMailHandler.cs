@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using ArticleQueue.Interfaces;
+using SubscriberQueue.Interfaces;
 using MonitorService;
 using OpenTelemetry;
 using OpenTelemetry.Context.Propagation;
