@@ -20,4 +20,8 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ArticleQueue\ArticleQueue.csproj" />
+    </ItemGroup>
+
 </Project>
