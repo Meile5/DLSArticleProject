@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using ArticleQueue.Interfaces;
 using ArticleQueue.Models;
 using ArticleQueue.Models.Events;
@@ -6,6 +7,10 @@ using ArticleService.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MonitorService;
+using OpenTelemetry;
+using OpenTelemetry.Context.Propagation;
+using Serilog;
 
 namespace ArticleService.BackgroundServices;
 
@@ -50,6 +55,17 @@ public class ArticleSubscriber : BackgroundService
 
         try
         {
+            //logging & tracing
+            var propagator = new TraceContextPropagator();
+            var parentContext = propagator.Extract(default, evt, (request, s) =>
+            {
+                return new List<string?>(new[] { request.Header.ContainsKey(s) ? request.Header[s].ToString() : string.Empty});
+            });
+            Baggage.Current = parentContext.Baggage;
+            using var activity = Monitoring.ActivitySource.StartActivity("Entered HandleEventAsync in ArticleSubscriber", ActivityKind.Consumer, parentContext.ActivityContext);
+
+            Log.Logger.Debug("Entered HandleEventAsync in ArticleSubscriber");
+            
             using var scope = _serviceProvider.CreateScope();
             var articleService = scope.ServiceProvider.GetRequiredService<IArticleService>();
 

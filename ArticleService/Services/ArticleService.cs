@@ -1,6 +1,8 @@
 using ArticleService.Database;
 using ArticleService.Dtos;
 using ArticleService.Entities;
+using MonitorService;
+using Serilog;
 
 namespace ArticleService.Services;
 
@@ -15,6 +17,10 @@ public class ArticleService : IArticleService
 
     public async Task<ArticleReadDto> CreateArticleAsync(ArticleCreateDto dto, Shard shard = Shard.Global)
     {
+        using var activity = Monitoring.ActivitySource.StartActivity("CreateArticleAsync called in ArticleService");
+
+        Log.Logger.Debug("CreateArticleAsync called in ArticleService");
+        
         var article = new Article
         {
             ArticleId = Guid.NewGuid(),
