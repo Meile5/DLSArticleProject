@@ -36,7 +36,7 @@ public class SubscriberService : ISubscriberService
 
         await _repository.CreateAsync(subscriber);
 
-        await _messageClient.Publish(new SubscriberCreatedEvent
+        await _messageClient.Publish(new NewSubscriberSuccessEvent
         {
             SubscriberId = subscriber.SubscriberId,
             Email = subscriber.Email

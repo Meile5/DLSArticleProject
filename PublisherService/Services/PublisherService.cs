@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using ArticleQueue.Interfaces;
-using ArticleQueue.Models.Events;
+using Shared.Events;
 using MonitorService;
 using OpenTelemetry;
 using OpenTelemetry.Context.Propagation;

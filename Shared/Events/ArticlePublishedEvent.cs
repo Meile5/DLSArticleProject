@@ -1,6 +1,4 @@
-using Shared;
-
-namespace ArticleQueue.Models.Events;
+namespace Shared.Events;
 
 public class ArticlePublishedEvent : Event
 {
