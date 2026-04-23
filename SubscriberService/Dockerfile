@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
+﻿FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
 USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
@@ -9,8 +9,9 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["SubscriberService/SubscriberService.csproj", "SubscriberService/"]
 COPY ["ArticleService/ArticleService.csproj", "ArticleService/"]
-COPY ["ArticleQueue/ArticleQueue.csproj", "ArticleQueue/"]
 COPY ["Shared/Shared.csproj", "Shared/"]
+COPY ["ArticleQueue/ArticleQueue.csproj", "ArticleQueue/"]
+COPY ["MonitorService/MonitorService.csproj", "MonitorService/"]
 RUN dotnet restore "SubscriberService/SubscriberService.csproj"
 COPY . .
 WORKDIR "/src/SubscriberService"
