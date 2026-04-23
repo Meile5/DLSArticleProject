@@ -1,12 +1,9 @@
 using System.Diagnostics;
 using ArticleQueue.Interfaces;
 using ArticleQueue.Models;
-using ArticleQueue.Models.Events;
+using Shared.Events;
 using ArticleService.Dtos;
 using ArticleService.Services;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using MonitorService;
 using OpenTelemetry;
 using OpenTelemetry.Context.Propagation;

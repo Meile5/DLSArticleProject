@@ -4,8 +4,7 @@ using NewsletterService.Clients;
 using OpenTelemetry;
 using OpenTelemetry.Context.Propagation;
 using Serilog;
-using Shared;
-using ArticlePublishedEvent = ArticleQueue.Models.Events.ArticlePublishedEvent;
+using Shared.Events;
 
 namespace NewsletterService.Services;
 

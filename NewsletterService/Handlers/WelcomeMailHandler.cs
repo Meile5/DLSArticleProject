@@ -4,7 +4,7 @@ using MonitorService;
 using OpenTelemetry;
 using OpenTelemetry.Context.Propagation;
 using Serilog;
-using Shared;
+using Shared.Events;
 
 namespace NewsletterService.Handlers;
 

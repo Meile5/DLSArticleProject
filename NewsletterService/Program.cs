@@ -1,11 +1,9 @@
 using ArticleQueue.Extensions;
-using ArticleQueue.Models.Events;
 using MonitorService;
 using NewsletterService.AppOptionsPattern;
 using NewsletterService.Clients;
-using NewsletterService.Exceptions;
 using OpenTelemetry.Trace;
-using Shared;
+using Shared.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 

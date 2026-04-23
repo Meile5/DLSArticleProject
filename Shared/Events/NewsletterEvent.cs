@@ -1,12 +1,10 @@
-using Shared;
+namespace Shared.Events;
 
-namespace ArticleQueue.Models.Events;
-
-public class LatestNewsEvent : Event
+public class NewsletterEvent : Event
 {
     public Guid ArticleId { get; set; }
     public string Title { get; set; }
     public string Content { get; set; }
-    public Guid AuthorId { get; set; }
+    public string AuthorName { get; set; }
     public DateTime PublishedAt { get; set; }
 }

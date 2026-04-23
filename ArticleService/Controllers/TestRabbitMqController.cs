@@ -1,8 +1,6 @@
 using ArticleQueue.Interfaces;
-using ArticleQueue.Models.Events;
-using ArticleService.Services;
 using Microsoft.AspNetCore.Mvc;
-using Shared;
+using Shared.Events;
 
 namespace ArticleService.Controllers;
 
