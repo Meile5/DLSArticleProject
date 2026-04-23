@@ -6,7 +6,6 @@ using NewsletterService.Clients;
 using NewsletterService.Exceptions;
 using OpenTelemetry.Trace;
 using Shared;
-using SubscriberQueue.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 

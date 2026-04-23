@@ -1,31 +1,19 @@
 using ArticleQueue.Extensions;
-using ArticleQueue.Models.Events;
 using MonitorService;
 using OpenTelemetry.Trace;
-using Shared;
-using Shared.Events;
-using SubscriberQueue;
-using SubscriberQueue.Events;
-using SubscriberQueue.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-    
+
 var options = builder.Services.MessageClientOptions(builder.Configuration);
 
 builder.Services.AddOpenTelemetry().Setup();
 builder.Services.AddSingleton(TracerProvider.Default.GetTracer(Monitoring.ActivitySource.Name));
 
-
 builder.Services.AddRabbitMqMessageClient(options);
-builder.Services.AddMessagingHandlers(typeof(Program).Assembly);
-builder.Services.AddSubscription<SubscriberCreatedEvent>("new-subscriber");
-builder.Services.AddSubscription<NewsletterEvent>("newsletter-subscription");
-builder.Services.AddSubscription<SubscriberUnsubscribedEvent>("new-unsubscribe");
-builder.Services.AddScoped<SubscriberList>();
 
 var app = builder.Build();
 
