@@ -17,9 +17,12 @@ public class ArticleService : IArticleService
 
     public async Task<ArticleReadDto> CreateArticleAsync(ArticleCreateDto dto, Shard shard = Shard.Global)
     {
-        using var activity = Monitoring.ActivitySource.StartActivity("CreateArticleAsync called in ArticleService");
+        if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "development")
+        {
+            using var activity = Monitoring.ActivitySource.StartActivity("CreateArticleAsync called in ArticleService");
 
-        Log.Logger.Debug("CreateArticleAsync called in ArticleService");
+            Log.Logger.Debug("CreateArticleAsync called in ArticleService");
+        }
         
         var article = new Article
         {

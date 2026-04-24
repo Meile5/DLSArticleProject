@@ -1,5 +1,7 @@
 ﻿using ArticleService.Entities;
 using Microsoft.Data.SqlClient;
+using MonitorService;
+using Serilog;
 
 namespace ArticleService.Database;
 
@@ -14,6 +16,13 @@ public class ArticleDatabase : IArticleRepository
 
     public async Task<Article> CreateAsync(Article article, Shard shard = Shard.Global)
     {
+        if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "development")
+        {
+            using var activity = Monitoring.ActivitySource.StartActivity("CreateAsync called in ArticleDatabase");
+
+            Log.Logger.Debug("CreateAsync called in ArticleDatabase");
+        }
+        
         await using var conn = await _coordinator.GetConnectionAsync(shard);
         await using var cmd = conn.CreateCommand();
 

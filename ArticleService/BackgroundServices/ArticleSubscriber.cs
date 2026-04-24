@@ -52,16 +52,20 @@ public class ArticleSubscriber : BackgroundService
 
         try
         {
-            //logging & tracing
-            var propagator = new TraceContextPropagator();
-            var parentContext = propagator.Extract(default, evt, (request, s) =>
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "development")
             {
-                return new List<string?>(new[] { request.Header.ContainsKey(s) ? request.Header[s].ToString() : string.Empty});
-            });
-            Baggage.Current = parentContext.Baggage;
-            using var activity = Monitoring.ActivitySource.StartActivity("Entered HandleEventAsync in ArticleSubscriber", ActivityKind.Consumer, parentContext.ActivityContext);
+                //logging & tracing
+                var propagator = new TraceContextPropagator();
+                var parentContext = propagator.Extract(default, evt, (request, s) =>
+                {
+                    return new List<string?>(new[] { request.Header.ContainsKey(s) ? request.Header[s].ToString() : string.Empty});
+                });
+                Baggage.Current = parentContext.Baggage;
+                using var activity = Monitoring.ActivitySource
+                    .StartActivity("Entered HandleEventAsync in ArticleSubscriber", ActivityKind.Consumer, parentContext.ActivityContext);
 
-            Log.Logger.Debug("Entered HandleEventAsync in ArticleSubscriber");
+                Log.Logger.Debug("Entered HandleEventAsync in ArticleSubscriber");
+            }
             
             using var scope = _serviceProvider.CreateScope();
             var articleService = scope.ServiceProvider.GetRequiredService<IArticleService>();

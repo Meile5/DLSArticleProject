@@ -13,10 +13,6 @@ public class PublisherService(IMessageClient _client)
 {
     public async Task PublishArticleAsync(PublishArticleRequest request)
     {
-        using var activity = Monitoring.ActivitySource.StartActivity("PublishArticleAsync called in PublisherService");
-
-        Log.Logger.Debug("PublishArticleAsync called in PublisherService");
-
         
         ArticlePublishedEvent articlePublished = new ArticlePublishedEvent
         {
@@ -27,11 +23,24 @@ public class PublisherService(IMessageClient _client)
             PublishedAt = DateTime.UtcNow
         };
         
-        //inject context before publishing event (for distributed tracing, so handlers that recieve this can get the context)
-        var activityContext = activity?.Context ?? Activity.Current?.Context ?? default;
-        var propagationContext = new PropagationContext(activityContext, Baggage.Current);
-        var propagator = new TraceContextPropagator();
-        propagator.Inject(propagationContext, articlePublished,(bRequest, key, value) => bRequest.Header.Add(key, value) );
+        if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "development")
+        {
+            using var activity = Monitoring.ActivitySource
+                .StartActivity("PublishArticleAsync called in PublisherService");
+
+            Log.Logger.Debug("PublishArticleAsync called in PublisherService");
+            
+            //inject context before publishing event
+            //(for distributed tracing, so handlers that recieve this can get the context)
+            var activityContext = activity?.Context ?? Activity.Current?.Context ?? default;
+            var propagationContext = new PropagationContext(activityContext, Baggage.Current);
+            var propagator = new TraceContextPropagator();
+            propagator.Inject(propagationContext, articlePublished,
+                (bRequest, key, value) => 
+                    bRequest.Header.Add(key, value) 
+            );
+        }
+        
 
         await _client.Publish(articlePublished);
     }

@@ -13,9 +13,13 @@ public class PublisherController(Services.PublisherService _service) : Controlle
     [HttpPost]
     public async Task<IActionResult> Publish(PublishArticleRequest request)
     {
-        using var activity = Monitoring.ActivitySource.StartActivity("Publish method called in PublisherController (POST request)");
+        if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "development")
+        {
+            using var activity = Monitoring.ActivitySource
+                .StartActivity("Publish method called in PublisherController (POST request)");
         
-        Log.Logger.Debug("Publish method called in PublisherController (POST request)");
+            Log.Logger.Debug("Publish method called in PublisherController (POST request)");
+        }
         
         await _service.PublishArticleAsync(request);
         return Ok();
