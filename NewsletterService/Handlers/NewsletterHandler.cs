@@ -23,7 +23,6 @@ public class NewsletterHandler(Services.NewsletterService service): IMessageHand
         
         //serilog logging
         Log.Logger.Debug("Entered HandleAsync in NewsletterHandler");
-
         
         //last two things here are for tracing
         await service.NewsletterAsync(message, parentContext, Baggage.Current);
